@@ -23,8 +23,15 @@ const Header = () => {
     const { scrollY } = useScroll();
     const [hidden, setHidden] = useState(false);
     const drawerCheckboxRef = useRef(null);
+    const [isSticky, setIsSticky] = useState(false);
 
     useMotionValueEvent(scrollY, "change", (latest) => {
+        if (latest > 50) {
+            setIsSticky(true);
+        } else {
+            setIsSticky(false);
+        }
+
         if (latest > 100 && latest > scrollY.getPrevious()) {
             setHidden(true);
         } else {
@@ -43,13 +50,18 @@ const Header = () => {
     useEffect(() => {
         closeDrawer();
     }, [location]);
+
+
     return (
         <motion.header
             className='lg:p-6 p-3 w-full z-99999 fixed top-0'
             animate={{ y: hidden ? -100 : 0 }}
             transition={{ duration: 0.3 }}
         >
-            <nav className={`navbar w-full ${isDark ? "bg-neutral-200" : "bg-[#ea99fab0]"} p-3 rounded-[60px] justify-between`}>
+            <nav className={`navbar w-full  p-3 rounded-[60px] justify-between ${isSticky
+                ? (isDark ? "bg-neutral-200" : "bg-purple-400")
+                : (isDark ? "bg-neutral-200" : "bg-[#ea99fab0]")
+                }`}>
                 <div className='lg:hidden block'>
                     <div className="drawer">
                         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" ref={drawerCheckboxRef} />

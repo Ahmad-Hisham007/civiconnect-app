@@ -41,13 +41,13 @@ const Footer = () => {
                                 <div className="space-y-2">
                                     <div>
                                         <h4 className="font-medium mb-1 text-white">Address</h4>
-                                        <p className=" text-purple-400">A3T Washington, mg</p>
-                                        <p className="text-purple-400">Manchester, Kentucky 39495</p>
+                                        <p className=" text-purple-200">A3T Washington, mg</p>
+                                        <p className="text-purple-200">Manchester, Kentucky 39495</p>
                                     </div>
                                     <div className="mt-3">
                                         <h4 className="font-medium mb-1 text-white">Phone Call</h4>
-                                        <p className="text-purple-400">2018-6666-0112</p>
-                                        <p className="text-purple-400">2018-5555-0113</p>
+                                        <p className="text-purple-200">2018-6666-0112</p>
+                                        <p className="text-purple-200">2018-5555-0113</p>
                                     </div>
                                 </div>
                             </div>
@@ -58,13 +58,13 @@ const Footer = () => {
                                 <div className="space-y-2">
                                     <div>
                                         <h4 className="font-medium mb-1 text-white">Address</h4>
-                                        <p className="text-purple-400">45T Washington, mg</p>
-                                        <p className="text-purple-400">Manchester, Kentucky 39495</p>
+                                        <p className="text-purple-200">45T Washington, mg</p>
+                                        <p className="text-purple-200">Manchester, Kentucky 39495</p>
                                     </div>
                                     <div className="mt-3">
                                         <h4 className="font-medium mb-1 text-white">Phone Call</h4>
-                                        <p className="text-purple-400">2018-6666-0112</p>
-                                        <p className="text-purple-400">2018-5555-0113</p>
+                                        <p className="text-purple-200">2018-6666-0112</p>
+                                        <p className="text-purple-200">2018-5555-0113</p>
                                     </div>
                                 </div>
                             </div>
@@ -73,17 +73,17 @@ const Footer = () => {
                             <div>
                                 <h3 className="text-2xl font-semibold mb-4 text-white">Newsletter</h3>
                                 <div className="space-y-4">
-                                    <p className="text-purple-400">
+                                    <p className="text-purple-200">
                                         Sign up to searing weekly newsletter to get the latest updates.
                                     </p>
 
                                     <div>
-                                        <p className="text-purple-400 mb-2">Your email address:</p>
+                                        <p className="text-purple-200 mb-2">Your email address:</p>
                                         <div className="flex md:flex-row flex-col gap-2">
                                             <input
                                                 type="email"
                                                 placeholder="Enter your email"
-                                                className="flex-1 px-3 py-2 border text-purple-400 focus:text-white border-purple-400 rounded focus:outline-none focus:ring-2 focus:ring-primary"
+                                                className="flex-1 px-3 py-2 border text-purple-200 focus:text-white border-purple-200 rounded focus:outline-none focus:ring-2 focus:ring-primary"
                                             />
                                             <button className="px-4 py-2 bg-primary text-white rounded hover:bg-secondary transition-colors cursor-pointer">
                                                 Subscribe
@@ -95,9 +95,9 @@ const Footer = () => {
                                         <input
                                             type="checkbox"
                                             id="privacy-policy"
-                                            className="w-4 h-4 text-primary border-purple-400 rounded focus:ring-primary"
+                                            className="w-4 h-4 text-primary border-purple-200 rounded focus:ring-primary"
                                         />
-                                        <label htmlFor="privacy-policy" className="ml-2 text-purple-400 text-sm">
+                                        <label htmlFor="privacy-policy" className="ml-2 text-purple-200 text-sm">
                                             I agree to the <a href='#'>Privacy Policy.</a>
                                         </label>
                                     </div>
@@ -106,10 +106,10 @@ const Footer = () => {
                         </div>
                         {/* Copyright Section */}
                         <div className="border-t border-purple-800 py-6 px-11 text-center flex md:flex-row flex-col justify-between items-center">
-                            <p className="text-purple-400">
+                            <p className="text-purple-200">
                                 ©2025 All rights For Viberet. Designed By RSThems.
                             </p>
-                            <a href='#' className="text-purple-400 mt-2">
+                            <a href='#' className="text-purple-200 mt-2">
                                 Privacy policy
                             </a>
                         </div>

@@ -16,7 +16,7 @@ const EventFeatures = () => {
                     {/* Left Column - Experienced Speaker */}
                     <div className="space-y-8 lg:max-w-78 h-full">
                         <div className="p-[33px_40px] bg-purple-200  rounded-2xl lg:rounded-[60px_0_0_0]">
-                            <div className="flex items-center lg:flex-row flex-col text-center gap-5 mb-4">
+                            <div className="flex items-center lg:flex-row flex-col lg:text-left text-center gap-5 mb-4">
                                 <ImUserTie className='text-primary text-6xl' />
                                 <h3 className="text-2xl font-bold text-stable-100">Experienced Speaker</h3>
                             </div>
@@ -26,11 +26,11 @@ const EventFeatures = () => {
                         </div>
 
                         <div className="p-[33px_40px] bg-purple-200  rounded-2xl lg:rounded-[0_0_0_60px]">
-                            <div className="flex items-center lg:flex-row flex-col text-center gap-5 mb-4">
+                            <div className="flex items-center lg:flex-row flex-col lg:text-left text-center gap-5 mb-4">
                                 <MdOutlineQuestionAnswer className='text-primary text-6xl' />
                                 <h3 className="text-2xl font-bold text-stable-100">Live Q&A Sessions</h3>
                             </div>
-                            <p className="text-gray-600  font-medium text-center lg:text-left">
+                            <p className="text-gray-600  font-medium lg:text-left text-center">
                                 Civiconnect is a creative platform dedicated to organizing.
                             </p>
                         </div>
@@ -61,7 +61,7 @@ const EventFeatures = () => {
                     {/* Right Column */}
                     <div className="space-y-8 lg:max-w-78 h-full">
                         <div className="p-[33px_40px] bg-purple-200  rounded-2xl lg:rounded-[0_60px_0_0]">
-                            <div className="flex items-center lg:flex-row flex-col text-center gap-5 mb-4">
+                            <div className="flex items-center lg:flex-row flex-col lg:text-left text-center gap-5 mb-4">
                                 <GiShop className='text-primary text-6xl' />
                                 <h3 className="text-2xl font-bold text-stable-100">Live Workshop Program</h3>
                             </div>
@@ -71,7 +71,7 @@ const EventFeatures = () => {
                         </div>
 
                         <div className="p-[33px_40px] bg-purple-200  rounded-2xl lg:rounded-[0_0_60px_0]">
-                            <div className="flex items-center lg:flex-row flex-col text-center gap-5 mb-4">
+                            <div className="flex items-center lg:flex-row flex-col lg:text-left text-center gap-5 mb-4">
                                 <RiUserCommunityFill className='text-primary text-6xl!' />
                                 <h3 className="text-2xl font-bold text-stable-100">Networking Opportunities</h3>
                             </div>
