@@ -1,4 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap");
 @import "tailwindcss";
+
+@theme {
+  --font-base: "Kanit", sans-serif;
+  --font-cursive: "Caveat", cursive;
+  --color-primary: #540863;
+  --color-secondary: #92487a;
+  --color-stable-100: #19041c;
+  --color-stable-200: #ffffff;
+  --color-light-accent: #8d05a8;
+}
 
 @plugin "daisyui" {
   themes: light --default, dark, sunset;
@@ -15,5 +27,6 @@
   name: "dark";
   --color-primary: #540863;
   --color-secondary: #92487a;
+  --color-base-100: #19041c;
   --color-base-content: #ffffff;
 }
