@@ -1,4 +1,5 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router';
 // eslint-disable-next-line no-unused-vars
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import logo from "./../../assets/Civiconnect Logo.png"
@@ -21,6 +22,7 @@ const Header = () => {
     const { isDark } = useContext(ThemeContext);
     const { scrollY } = useScroll();
     const [hidden, setHidden] = useState(false);
+    const drawerCheckboxRef = useRef(null);
 
     useMotionValueEvent(scrollY, "change", (latest) => {
         if (latest > 100 && latest > scrollY.getPrevious()) {
@@ -29,7 +31,18 @@ const Header = () => {
             setHidden(false);
         }
     })
+    const closeDrawer = () => {
+        if (drawerCheckboxRef.current) {
+            drawerCheckboxRef.current.checked = false;
+        }
+    };
 
+    // Inside component
+    const location = useLocation();
+
+    useEffect(() => {
+        closeDrawer();
+    }, [location]);
     return (
         <motion.header
             className='lg:p-6 p-3 w-full z-99999 fixed top-0'
@@ -39,7 +52,7 @@ const Header = () => {
             <nav className={`navbar w-full ${isDark ? "bg-neutral-200" : "bg-[#ea99fab0]"} p-3 rounded-[60px] justify-between`}>
                 <div className='lg:hidden block'>
                     <div className="drawer">
-                        <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
+                        <input id="my-drawer-2" type="checkbox" className="drawer-toggle" ref={drawerCheckboxRef} />
                         <div className="drawer-content">
                             {/* Navbar */}
                             <div>
@@ -56,7 +69,7 @@ const Header = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="drawer-side p-0!">
+                        <div className="drawer-side p-0!" >
                             <label htmlFor="my-drawer-2" aria-label="close sidebar" className="drawer-overlay">
                             </label>
 
@@ -80,8 +93,8 @@ const Header = () => {
                                     {NavLinks}
                                 </ul>
                                 <div className="inline-block grow-0 width-full gap-5 px-4 mt-auto mb-4">
-                                    <Link to="/register" className="btn  border-0 bg-stable-100 text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-secondary">Register Now <BsTicketPerforatedFill className='text-xl' /></Link>
-                                    <Link to="/register" className="btn mt-5 border-0 bg-secondary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-stable-100">Login <BiSolidLogInCircle className='text-xl' /></Link>
+                                    <Link to="/register" className="btn  border-0 bg-primary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-secondary">Register Now <BsTicketPerforatedFill className='text-xl' /></Link>
+                                    <Link to="/register" className="btn mt-5 border-0 bg-secondary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-primary">Login <BiSolidLogInCircle className='text-xl' /></Link>
                                 </div>
                             </nav>
                         </div>
@@ -105,8 +118,8 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="flex-auto grow-0 width-auto gap-5 hidden sm:flex">
-                    <Link to="/register" className="btn border-0 bg-stable-100 text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-secondary">Register Now <BsTicketPerforatedFill className='text-xl' /></Link>
-                    <Link to="/register" className="btn border-0 bg-secondary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-stable-100">Login <BiSolidLogInCircle className='text-xl' /></Link>
+                    <Link to="/register" className="btn border-0 bg-primary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-secondary">Register Now <BsTicketPerforatedFill className='text-xl' /></Link>
+                    <Link to="/register" className="btn border-0 bg-secondary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-primary">Login <BiSolidLogInCircle className='text-xl' /></Link>
                 </div>
             </nav>
         </motion.header >
