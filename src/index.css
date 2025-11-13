@@ -4,6 +4,7 @@
 
 @theme {
   --font-base: "Kanit", sans-serif;
+  --font-family-body: "Kanit", sans-serif;
   --font-cursive: "Caveat", cursive;
   --color-primary: #540863;
   --color-secondary: #92487a;
@@ -12,21 +13,38 @@
   --color-light-accent: #8d05a8;
 }
 
+html,
+body {
+  font-family: var(--font-family-body);
+}
+
 @plugin "daisyui" {
   themes: light --default, dark, sunset;
 }
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
+  --font-base: "Kanit", sans-serif;
   --color-primary: #540863;
   --color-secondary: #92487a;
   --color-base-100: #ffffff;
   --color-base-content: #19041c;
+  --color-base-200: #faf5ff;
+  --color-base-200-content: #19041c;
+  --color-base-300: #92487a;
+  --color-base-300-content: #ffffff;
+  --color-content: #030712;
 }
 @plugin "daisyui/theme" {
   name: "dark";
+  --font-base: "Kanit", sans-serif;
   --color-primary: #540863;
   --color-secondary: #92487a;
   --color-base-100: #19041c;
   --color-base-content: #ffffff;
+  --color-base-200: #fbb4fd54;
+  --color-base-200-content: #fff;
+  --color-base-300: #fbb4fd94;
+  --color-base-300-content: #19041c;
+  --color-content: #99a1af;
 }

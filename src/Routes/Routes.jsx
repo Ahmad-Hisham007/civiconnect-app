@@ -9,6 +9,7 @@ import Auth from '../Pages/Auth/Auth';
 import CreateEvents from '../Pages/CreateEvents/CreateEvents';
 import ManageEvents from '../Pages/ManageEvents/ManageEvents';
 import JoinedEvents from '../Pages/JoinedEvents/JoinedEvents';
+import SingleEvent from '../Pages/SingleEvent/SingleEvent';
 
 const Routes = createBrowserRouter([
     {
@@ -23,6 +24,10 @@ const Routes = createBrowserRouter([
             {
                 path: "/upcoming-events",
                 element: <UpcomingEvents></UpcomingEvents>
+            },
+            {
+                path: "/single-event",
+                element: <SingleEvent />,
             },
             {
                 path: "/register",

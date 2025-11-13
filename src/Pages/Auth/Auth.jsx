@@ -1,10 +1,12 @@
 import React from 'react';
+import HomeLayout from '../../Layouts/HomeLayout/HomeLayout';
+import { Outlet } from 'react-router';
 
 const Auth = () => {
     return (
-        <div>
-
-        </div>
+        <main>
+            <Outlet></Outlet>
+        </main>
     );
 };
 

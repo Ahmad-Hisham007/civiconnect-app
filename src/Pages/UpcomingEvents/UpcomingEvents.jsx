@@ -1,10 +1,13 @@
 import React from 'react';
+import HeroSection from './HeroSection';
+import EventsSection from './EventsSection';
 
 const UpcomingEvents = () => {
     return (
-        <div>
-
-        </div>
+        <>
+            <HeroSection />
+            <EventsSection />
+        </>
     );
 };
 

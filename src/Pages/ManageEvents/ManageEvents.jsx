@@ -1,10 +1,13 @@
 import React from 'react';
+import HeroSection from '../../Components/ThemeSwitcher/HeroSection/HeroSection';
+import ManageEventsTable from './ManageEventsTable';
 
 const ManageEvents = () => {
     return (
-        <div>
-
-        </div>
+        <>
+            <HeroSection title={"Create Event"} />
+            <ManageEventsTable />
+        </>
     );
 };
 
