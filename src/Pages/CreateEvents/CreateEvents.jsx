@@ -1,10 +1,13 @@
 import React from 'react';
+import HeroSection from '../../Components/HeroSection/HeroSection';
+import CreateEventForm from './CreateEventForm';
 
 const CreateEvents = () => {
     return (
-        <div>
-
-        </div>
+        <>
+            <HeroSection title="Create Event" />
+            <CreateEventForm/>
+        </>
     );
 };
 

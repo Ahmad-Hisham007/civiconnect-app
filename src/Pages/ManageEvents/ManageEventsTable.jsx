@@ -130,7 +130,7 @@ const ManageEventsTable = () => {
                                         <th>
                                             <div className='flex gap-3 items-center'>
                                                 <button className="btn btn-ghost btn-xs font-medium bg-base-content text-base-100">Update</button>
-                                                <button className="btn btn-ghost btn-xs font-medium bg-base-300 text-base-100">Update</button>
+                                                <button className="btn btn-ghost btn-xs font-medium bg-base-300 text-stable-100">Update</button>
                                             </div>
                                         </th>
                                     </tr>

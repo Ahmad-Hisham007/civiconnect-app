@@ -31,8 +31,8 @@ body {
   --color-base-content: #19041c;
   --color-base-200: #faf5ff;
   --color-base-200-content: #19041c;
-  --color-base-300: #92487a;
-  --color-base-300-content: #ffffff;
+  --color-base-300: #f6cfff;
+  --color-base-300-content: #19041c;
   --color-content: #030712;
 }
 @plugin "daisyui/theme" {
