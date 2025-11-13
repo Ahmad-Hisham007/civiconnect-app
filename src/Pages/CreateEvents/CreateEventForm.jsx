@@ -1,11 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { ThemeContext } from '../../Contexts/ThemeContext';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const CreateEventForm = () => {
     const [error, setError] = useState('');
-    const { isDark } = useContext(ThemeContext);
     const [startDate, setStartDate] = useState(new Date());
     return (
         <section className='min-h-screen py-20 px-4 flex items-center [&_input]:outline-0'>
@@ -13,7 +12,7 @@ const CreateEventForm = () => {
                 {/* Header */}
                 <p className={`text-2xl font-cursive text-center text-content`} >New Event</p>
                 <h2 className="text-3xl font-bold text-main font-primary text-center mb-8">
-                    Create your own event
+                    Launch your own event
                 </h2>
 
                 <form /* onSubmit = { handleRegister } */ className="space-y-6">
@@ -108,19 +107,7 @@ const CreateEventForm = () => {
 
                     </div>
 
-                    {/* Terms and Conditions */}
-                    <div className="flex items-center">
-                        <input
-                            type="checkbox"
-                            id="terms"
-                            name="terms"
-                            className="w-4 h-4 text-base bg-gray-100 border-base-300 rounded"
-                            required
-                        />
-                        <label htmlFor="terms" className="ml-2 text-sm text-base-300-content">
-                            You accept our <a href="#" className="text-amber hover:underline">Terms and Conditions</a> and <a href="#" className="text-amber hover:underline">Privacy Policy</a>
-                        </label>
-                    </div>
+
                     {/* Submit Button */}
                     <button
                         type="submit"

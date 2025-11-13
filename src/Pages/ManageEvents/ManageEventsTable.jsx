@@ -1,9 +1,11 @@
 
-import React, { useContext } from 'react';
+import React, { useContext, useRef } from 'react';
 import { ThemeContext } from '../../Contexts/ThemeContext';
+import UpdateEventForm from './UpdateEventForm';
 
 const ManageEventsTable = () => {
     const { isDark } = useContext(ThemeContext);
+    const updateEventModalRef = useRef(null)
 
     const events = [
         {
@@ -129,7 +131,7 @@ const ManageEventsTable = () => {
                                         <td>Free</td>
                                         <th>
                                             <div className='flex gap-3 items-center'>
-                                                <button className="btn btn-ghost btn-xs font-medium bg-base-content text-base-100">Update</button>
+                                                <button onClick={() => updateEventModalRef.current.showModal()} className="btn btn-ghost btn-xs font-medium bg-base-content text-base-100">Update</button>
                                                 <button className="btn btn-ghost btn-xs font-medium bg-base-300 text-stable-100">Update</button>
                                             </div>
                                         </th>
@@ -150,6 +152,28 @@ const ManageEventsTable = () => {
                     </table>
                 </div>
             </div>
+            {/* Open the modal using document.getElementById('ID').showModal() method */}
+            {/* <button className="btn" onClick={() => document.getElementById('my_modal_5').showModal()}>open modal</button> */}
+            <dialog id="updateEventModal" ref={updateEventModalRef} className="modal modal-bottom sm:modal-middle">
+
+                <div className="modal-box p-0 relative">
+                    <button onClick={() => updateEventModalRef.current.close()} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    <div className='max-h-[60vh] w-full p-6 overflow-y-auto'>
+
+                        <p className={`text-2xl font-cursive text-center text-content`} >Update Event</p>
+                        <h2 className="text-3xl font-bold text-main font-primary text-center mb-8">
+                            Edit current event
+                        </h2>
+                        <div className="modal-action">
+                            <form method="dialog " onSubmit={(e) => e.preventDefault}>
+                                {/* if there is a button in form, it will close the modal */}
+                                <UpdateEventForm />
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </dialog>
         </section>
     );
 };

@@ -5,6 +5,8 @@ import { ThemeProvider } from './Contexts/ThemeContext.jsx'
 import { RouterProvider } from 'react-router'
 import Routes from './Routes/Routes.jsx'
 import ThemeGlobal from './Components/ThemeSwitcher/ThemeGlobal.jsx'
+import AuthProvider from './Contexts/AuthProvider/AuthProvider.jsx'
+
 
 
 createRoot(document.getElementById('root')).render(
@@ -12,7 +14,9 @@ createRoot(document.getElementById('root')).render(
 
     <ThemeProvider>
       <ThemeGlobal>
-        <RouterProvider router={Routes}></RouterProvider>
+        <AuthProvider>
+          <RouterProvider router={Routes}></RouterProvider>
+        </AuthProvider>
       </ThemeGlobal>
     </ThemeProvider>
 
