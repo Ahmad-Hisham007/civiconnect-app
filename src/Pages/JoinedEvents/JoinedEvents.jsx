@@ -1,10 +1,13 @@
 import React from 'react';
+import HeroSection from '../../Components/HeroSection/HeroSection';
+import JoinedEventsTable from './JoinedEventsTable';
 
 const JoinedEvents = () => {
     return (
-        <div>
-
-        </div>
+        <>
+            <HeroSection title="Joined Events" />
+            <JoinedEventsTable />
+        </>
     );
 };
 

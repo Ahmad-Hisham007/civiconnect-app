@@ -1,10 +1,13 @@
 import React from 'react';
+import HeroSection from '../../Components/HeroSection/HeroSection';
+import LoginForm from './LoginForm';
 
 const Login = () => {
     return (
-        <div>
-
-        </div>
+        <>
+            <HeroSection title="Login To your existing account" />
+            <LoginForm />
+        </>
     );
 };
 

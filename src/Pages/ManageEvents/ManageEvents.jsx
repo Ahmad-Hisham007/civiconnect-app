@@ -1,5 +1,5 @@
 import React from 'react';
-import HeroSection from '../../Components/ThemeSwitcher/HeroSection/HeroSection';
+import HeroSection from '../../Components/HeroSection/HeroSection';
 import ManageEventsTable from './ManageEventsTable';
 
 const ManageEvents = () => {

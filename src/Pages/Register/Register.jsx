@@ -1,10 +1,13 @@
 import React from 'react';
+import HeroSection from '../../Components/HeroSection/HeroSection';
+import RegistrationForm from './RegistrationForm';
 
 const Register = () => {
     return (
-        <div>
-
-        </div>
+        <>
+            <HeroSection title="Register your account" />
+            <RegistrationForm />
+        </>
     );
 };
 

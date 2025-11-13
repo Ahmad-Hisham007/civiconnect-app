@@ -1,0 +1,174 @@
+import React, { useState } from 'react';
+import { FaEye } from "react-icons/fa";
+import { FaEyeSlash } from "react-icons/fa";
+import { Link, Navigate, useLocation } from 'react-router';
+import { FcGoogle } from "react-icons/fc";
+
+const LoginForm = () => {
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [error, setError] = useState('');
+    const [passwordError, setPasswordError] = useState([]);
+    // const { setLoading } = useContext(AuthContext);
+    const location = useLocation();
+
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+
+    const validatePassword = (password) => {
+        const errors = [];
+
+        //  uppercase letter
+        if (!/(?=.*[A-Z])/.test(password)) {
+            errors.push("Must have at least one uppercase letter");
+        }
+
+        //  lowercase letter
+        if (!/(?=.*[a-z])/.test(password)) {
+            errors.push("Must have at least one lowercase letter");
+        }
+
+        // minimum length
+        if (password.length < 6) {
+            errors.push("Must be at least 6 characters long");
+        }
+
+        return {
+            isValid: errors.length === 0,
+            errors: errors
+        };
+    };
+
+    // const handleRegister = (e) => {
+    //     e.preventDefault();
+    //     const name = e.target.name.value;
+    //     const email = e.target.email.value;
+    //     const photoURL = e.target.photoURL.value;
+    //     const password = e.target.password.value;
+    //     const confirmPassword = e.target.confirmPassword.value;
+    //     const { isValid, errors } = validatePassword(password);
+
+    //     if (!isValid) {
+    //         setPasswordError([...errors]);
+    //         // alert(errors.join('\n'));
+    //         errors.map((err) => {
+    //             toast.error(err)
+    //         })
+    //         return;
+    //     }
+
+    //     if (password !== confirmPassword) {
+    //         setError('Passwords do not match');
+    //         toast.error('Passwords do not match!');
+    //         return;
+    //     }
+
+    //     createUserWithEmailAndPassword(auth, email, password)
+    //         .then((userCredential) => {
+    //             const user = userCredential.user;
+    //             updateProfile(user, {
+    //                 displayName: name,
+    //                 photoURL: photoURL
+    //             });
+    //             e.target.reset();
+    //             setError('');
+    //             setPasswordError([]);
+    //             toast.success('Account created successfully!');
+    //             setLoading(false);
+    //             setIsAuthenticated(true)
+    //         })
+    //         .catch((error) => {
+    //             toast.error('Error creating user:', error.message);
+    //             setError(error.message);
+    //         });
+
+    // };
+
+    // const handleGoogleSignIn = () => {
+    //     signInWithPopup(auth, googleProvider)
+    //         .then((result) => {
+    //             // eslint-disable-next-line no-unused-vars
+    //             const user = result.user;
+    //             toast.success('Signin successfull');
+    //             setError('');
+    //             setLoading(false);
+    //             setIsAuthenticated(true);
+    //         })
+    //         .catch((error) => {
+    //             toast.error('Error creating user:', error.message);
+    //             setError(error.message);
+    //         });
+    // };
+
+    // if (isAuthenticated) {
+    //     return <Navigate Navigate to={`${location.state ? location.state : "/"}`
+    //     }></Navigate >
+    // }
+
+    return (
+        <section className='min-h-screen py-20 px-4 flex items-center [&_input]:outline-0'>
+            <div className="bg-base-200 rounded-2xl shadow-lg border border-base-300 p-8 max-w-4xl w-full mx-auto" data-aos="fade-down">
+                {/* Header */}
+                <h2 className="text-3xl font-bold text-main font-primary text-center mb-8">
+                    Login to your account
+                </h2>
+
+                <form /* onSubmit = { handleRegister } */ className="space-y-6">
+
+                    {/* Email Field */}
+                    <div>
+                        <label htmlFor="email" className="block text-sm font-medium text-base-content mb-2">
+                            Email *
+                        </label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            autoComplete='email'
+                            className="w-full px-4 py-3 border border-base-300 rounded-lg focus:ring-2 focus:ring-amber focus:border-amber transition-all duration-300"
+                            placeholder="Email"
+                            required
+                        />
+                    </div>
+
+
+                    {/* Password Field */}
+                    <div>
+                        <label htmlFor="password" className="block text-sm font-medium text-base-content mb-2">
+                            Password *
+                        </label>
+                        <div className="relative">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                id="password"
+                                name="password"
+                                autoComplete='new-password'
+                                className="w-full px-4 py-3 border border-base-300 rounded-lg focus:ring-2 focus:ring-amber focus:border-amber transition-all duration-300"
+                                placeholder="Password"
+                                required
+                            />
+                            <span  /* onClick={() => setShowPassword(!showPassword)} onSubmit={handleRegister} */ className='absolute top-[50%] right-5 cursor-pointer hover:scale-120 translate-y-[-50%]'> {showPassword ? <FaEyeSlash /> : <FaEye />} </span>
+                        </div>
+                        {passwordError.length > 0 && <ul className='gap-1 mt-2'>
+                            {
+                                passwordError.map((err, index) => <li className='text-red-500 text-sm' key={index} >{err}</li>)
+                            }
+                        </ul>}
+                    </div>
+                    {/* Submit Button */}
+                    <button
+                        type="submit"
+                        className="w-full bg-base-content text-base-100 font-medium py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105  text-md cursor-pointer"
+                    >
+                        Register Now
+                    </button>
+                    {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                </form>
+                <button  /* onClick={handleGoogleSignIn} */ className=" my-3 w-full border border-main hover:border-amber active:border-amber text-main font-medium py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 focus:ring-2 focus:ring-amber focus:ring-opacity-50 text-md cursor-pointer flex items-center justify-center gap-2"> <FcGoogle className='text-2xl' /> Login with Google </button>
+                <p className='text-center text-normal'>Don't have an account? <Link className='underline text-amber font-medium' to='/register'>Please register</Link></p>
+            </div>
+        </section>
+    );
+};
+
+export default LoginForm;
