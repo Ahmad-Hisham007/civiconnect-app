@@ -54,7 +54,7 @@ const EventFeatures = () => {
                                 Civiconnect is a creative platform dedicated to organizing world-class design Event that brings together:
                             </p>
                         </div>
-                        <Link to="/register" className="btn border-0 bg-white text-stable-100 text-base p-[13px_24px]! h-auto! rounded-[60px] shadow-none flex gap-3 items-center hover:text-white hover:bg-primary">Explore Events <HiArrowNarrowRight className='text-xl' /></Link>
+                        <Link to="/upcoming-events" className="btn border-0 bg-white text-stable-100 text-base p-[13px_24px]! h-auto! rounded-[60px] shadow-none flex gap-3 items-center hover:text-white hover:bg-primary">Explore Events <HiArrowNarrowRight className='text-xl' /></Link>
 
                     </div>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, Navigate } from 'react-router';
 import HomeLayout from '../Layouts/HomeLayout/HomeLayout';
 import HomePage from '../Pages/HomePage/HomePage';
 import UpcomingEvents from '../Pages/UpcomingEvents/UpcomingEvents';
@@ -10,6 +10,9 @@ import CreateEvents from '../Pages/CreateEvents/CreateEvents';
 import ManageEvents from '../Pages/ManageEvents/ManageEvents';
 import JoinedEvents from '../Pages/JoinedEvents/JoinedEvents';
 import SingleEvent from '../Pages/SingleEvent/SingleEvent';
+import ErrorPage from '../Components/ErrorPage/ErrorPage';
+import PrivateRoute from './PrivateRoute';
+import UpcomingPage from '../Pages/UpcomingPage/UpcomingPage';
 
 const Routes = createBrowserRouter([
     {
@@ -20,6 +23,14 @@ const Routes = createBrowserRouter([
                 index: true,
                 path: "/",
                 element: <HomePage></HomePage>
+            },
+            {
+                path: "/our-story",
+                element: <UpcomingPage></UpcomingPage>
+            },
+            {
+                path: "/contact",
+                element: <UpcomingPage></UpcomingPage>
             },
             {
                 path: "/upcoming-events",
@@ -39,8 +50,17 @@ const Routes = createBrowserRouter([
             },
             {
                 path: "/auth",
-                element: <Auth></Auth>,
+                element: (
+                    <PrivateRoute>
+                        <Auth></Auth>
+                    </PrivateRoute>
+                ),
                 children: [
+                    {
+                        index: true,
+                        path: "/auth",
+                        element: <Navigate to="/login" />
+                    },
                     {
                         path: "/auth/create-events",
                         element: <CreateEvents></CreateEvents>
@@ -55,7 +75,8 @@ const Routes = createBrowserRouter([
                     }
                 ]
             }
-        ]
+        ],
+        errorElement: <ErrorPage />
     },
 ]);
 

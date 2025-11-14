@@ -13,7 +13,7 @@ const HomeLayout = () => {
         return (
             <>
                 <Header></Header>
-                <main>
+                <main className='min-h-screen'>
                     <Outlet></Outlet>
                 </main>
                 <Footer></Footer>

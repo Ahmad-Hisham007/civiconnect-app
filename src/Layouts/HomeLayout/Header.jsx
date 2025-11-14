@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 // eslint-disable-next-line no-unused-vars
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import logo from "./../../assets/Civiconnect Logo.png"
@@ -13,6 +13,7 @@ import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 import { RiLogoutCircleLine, RiUserStarLine } from "react-icons/ri";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { FaArrowUpWideShort, FaPenToSquare, FaRegUser } from 'react-icons/fa6';
+import toast from 'react-hot-toast';
 
 
 
@@ -35,8 +36,18 @@ const Header = () => {
     const [hidden, setHidden] = useState(false);
     const drawerCheckboxRef = useRef(null);
     const [isSticky, setIsSticky] = useState(false);
-    const { user, logOut } = useContext(AuthContext)
+    const { user, logOut } = useContext(AuthContext);
+    const navigate = useNavigate();
 
+    const handleLogout = () => {
+        logOut().then(() => {
+            navigate('/login');
+            toast.success('Logout Successful');
+            return;
+        }).catch((error) => {
+            toast.error(error.message);
+        });
+    }
     useMotionValueEvent(scrollY, "change", (latest) => {
         if (latest > 50) {
             setIsSticky(true);
@@ -117,8 +128,10 @@ const Header = () => {
                                     {NavLinks}
                                 </ul>
                                 <div className="inline-block grow-0 width-full gap-5 px-4 mt-auto mb-4">
-                                    <Link to="/register" className="btn  border-0 bg-primary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-secondary">Register Now <BsTicketPerforatedFill className='text-xl' /></Link>
-                                    <Link to="/register" className="btn mt-5 border-0 bg-secondary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-primary">Login <BiSolidLogInCircle className='text-xl' /></Link>
+                                    {!user ? <>
+                                        <Link to="/register" className="btn  border-0 bg-primary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-secondary">Register Now <BsTicketPerforatedFill className='text-xl' /></Link>
+                                        <Link to="/register" className="btn mt-5 border-0 bg-secondary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-primary">Login <BiSolidLogInCircle className='text-xl' /></Link>
+                                    </> : <button onClick={handleLogout} className="btn border-0 w-full bg-secondary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-primary">Logout <RiLogoutCircleLine className='text-xl' /></button>}
                                 </div>
                             </nav>
                         </div>
@@ -134,7 +147,7 @@ const Header = () => {
                         />
                     </Link>
                 </div>
-                <div className='dropdown cursor-pointer md:hidden block'>
+                {user && <div className='dropdown cursor-pointer md:hidden block'>
                     <div tabIndex={0} role="button" className="tooltip tooltip-bottom" data-tip={user.displayName || 'User Display Name'}>
 
                         <div className=" font-semibold font-primary text-lg text-main hover:text-white hover:bg-main border-2 border-stable-100 cursor-pointer rounded-full w-12 h-12">
@@ -149,7 +162,7 @@ const Header = () => {
                             PrivLinks
                         }
                     </ul>
-                </div>
+                </div>}
                 {/* Navigation Links */}
                 <div className="hidden lg:flex  flex-1 justify-center">
                     <ul className="menu menu-horizontal px-1 font-medium space-x-6 [&_li]:bg-transparent [&_li_a]:bg-transparent [&_li_a]:hover:opacity-70 [&_li_a]:hover:underline underline-offset-6 [&_li_a]:text-lg [&_li_a]:semi-bold [&_li_a]:text-base-100 [&_li_a.active]:opacity-70 [&_li_a.active]:underline">
@@ -160,24 +173,26 @@ const Header = () => {
                     {!user ? <>
                         <Link to="/register" className="btn border-0 bg-primary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-secondary">Register Now <BsTicketPerforatedFill className='text-xl' /></Link>
                         <Link to="/login" className="btn border-0 bg-secondary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-primary">Login <RiLogoutCircleRLine className='text-xl' /></Link>
-                    </> : <button onClick={logOut} className="btn border-0 bg-secondary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-primary">Logout <RiLogoutCircleLine className='text-xl' /></button>
+                    </> : <button onClick={handleLogout} className="btn border-0 bg-secondary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-primary">Logout <RiLogoutCircleLine className='text-xl' /></button>
                     }
-                    <div className='dropdown cursor-pointer'>
-                        <div tabIndex={0} role="button" className="tooltip tooltip-bottom" data-tip={user.displayName || 'User Display Name'}>
+                    {
+                        user && <div className='dropdown cursor-pointer'>
+                            <div tabIndex={0} role="button" className="tooltip tooltip-bottom" data-tip={user.displayName || 'User Display Name'}>
 
-                            <div className=" font-semibold font-primary text-lg text-main hover:text-white hover:bg-main border-2 border-stable-100 cursor-pointer rounded-full w-12 h-12">
-                                {
-                                    user.photoURL ? <img className='w-full h-full object-cover object-top rounded-full' src={user.photoURL} alt={`${user.displayName} name`} referrerPolicy="no-referrer" /> :
-                                        <FaRegUser />
-                                }
+                                <div className=" font-semibold font-primary text-lg text-main hover:text-white hover:bg-main border-2 border-stable-100 cursor-pointer rounded-full w-12 h-12">
+                                    {
+                                        user.photoURL ? <img className='w-full h-full object-cover object-top rounded-full' src={user.photoURL} alt={`${user.displayName} name`} referrerPolicy="no-referrer" /> :
+                                            <FaRegUser />
+                                    }
+                                </div>
                             </div>
+                            <ul tabIndex="-1" className={`gap-2  dropdown-content ${isDark ? "shadow-[#ffffff47]" : "shadow-base"} menu bg-base-100 [&_a]:text-base-200-content [&_a]:hover:bg-base-300 [&_a]:hover:text-base-200-content! [&_a]:active:bg-base-300 [&_a]:active:text-base-200-content! [&_a.active]:bg-base-300 [&_a.active]:text-base-200-content! rounded-box z-1 w-auto min-w-40 font-normal right-0 top-full mt-2 p-2 shadow-sm`} >
+                                {
+                                    PrivLinks
+                                }
+                            </ul>
                         </div>
-                        <ul tabIndex="-1" className="gap-2 dropdown-content menu bg-base-100 [&_a]:text-base-200-content [&_a]:hover:bg-base-300 [&_a]:hover:text-base-200-content! [&_a]:active:bg-base-300 [&_a]:active:text-base-200-content! [&_a.active]:bg-base-300 [&_a.active]:text-base-200-content! rounded-box z-1 w-auto min-w-40 font-normal right-0 top-full mt-2 p-2 shadow-sm">
-                            {
-                                PrivLinks
-                            }
-                        </ul>
-                    </div>
+                    }
 
                 </div>
             </nav>

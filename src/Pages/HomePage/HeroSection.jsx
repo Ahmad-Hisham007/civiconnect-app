@@ -7,7 +7,7 @@ const HeroSection = () => {
         <section
             className="relative overflow-hidden bg-cover bg-center bg-no-repeat flex flex-col items-center justify-center"
             style={{
-                backgroundImage: 'url(https://demo-themewinter.com/eventplace/wp-content/uploads/2022/11/hero_area_image_3.jpg)'
+                backgroundImage: "url(/hero_area_image_3.jpg)"
             }}
         >
 
@@ -70,7 +70,7 @@ const HeroSection = () => {
                                 </div>
                             </div>
 
-                            <button className="bg-primary cursor-pointer hover:bg-[var(--color-secondary)] text-white px-8 py-3 rounded-xl font-semibold transition-colors duration-200">
+                            <button className="bg-primary cursor-pointer hover:bg-secondary text-white px-8 py-3 rounded-xl font-semibold transition-colors duration-200">
                                 Search
                             </button>
                         </div>

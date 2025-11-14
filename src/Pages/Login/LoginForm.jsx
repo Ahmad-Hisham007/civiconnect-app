@@ -1,9 +1,9 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { signInWithPopup, signInWithEmailAndPassword, GoogleAuthProvider } from "firebase/auth";
 
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { Link, Navigate, useLocation, useNavigate } from 'react-router';
+import { Link, Navigate, useLocation } from 'react-router';
 import { FcGoogle } from "react-icons/fc";
 import toast from 'react-hot-toast';
 import { auth, AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
