@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { Link, Navigate, useLocation } from 'react-router';
 import { FcGoogle } from "react-icons/fc";
+import { auth, AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile } from 'firebase/auth';
+import toast from 'react-hot-toast';
+
+const googleProvider = new GoogleAuthProvider();
 
 const RegistrationForm = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [error, setError] = useState('');
     const [passwordError, setPasswordError] = useState([]);
-    // const { setLoading } = useContext(AuthContext);
+    const { setLoading } = useContext(AuthContext);
     const location = useLocation();
 
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -39,71 +44,70 @@ const RegistrationForm = () => {
         };
     };
 
-    // const handleRegister = (e) => {
-    //     e.preventDefault();
-    //     const name = e.target.name.value;
-    //     const email = e.target.email.value;
-    //     const photoURL = e.target.photoURL.value;
-    //     const password = e.target.password.value;
-    //     const confirmPassword = e.target.confirmPassword.value;
-    //     const { isValid, errors } = validatePassword(password);
+    const handleRegister = (e) => {
+        e.preventDefault();
+        const name = e.target.name.value;
+        const email = e.target.email.value;
+        const photoURL = e.target.photoURL.value;
+        const password = e.target.password.value;
+        const confirmPassword = e.target.confirmPassword.value;
+        const { isValid, errors } = validatePassword(password);
 
-    //     if (!isValid) {
-    //         setPasswordError([...errors]);
-    //         // alert(errors.join('\n'));
-    //         errors.map((err) => {
-    //             toast.error(err)
-    //         })
-    //         return;
-    //     }
+        if (!isValid) {
+            setPasswordError([...errors]);
+            errors.map((err) => {
+                toast.error(err)
+            })
+            return;
+        }
 
-    //     if (password !== confirmPassword) {
-    //         setError('Passwords do not match');
-    //         toast.error('Passwords do not match!');
-    //         return;
-    //     }
+        if (password !== confirmPassword) {
+            setError('Passwords do not match');
+            toast.error('Passwords do not match!');
+            return;
+        }
 
-    //     createUserWithEmailAndPassword(auth, email, password)
-    //         .then((userCredential) => {
-    //             const user = userCredential.user;
-    //             updateProfile(user, {
-    //                 displayName: name,
-    //                 photoURL: photoURL
-    //             });
-    //             e.target.reset();
-    //             setError('');
-    //             setPasswordError([]);
-    //             toast.success('Account created successfully!');
-    //             setLoading(false);
-    //             setIsAuthenticated(true)
-    //         })
-    //         .catch((error) => {
-    //             toast.error('Error creating user:', error.message);
-    //             setError(error.message);
-    //         });
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                updateProfile(user, {
+                    displayName: name,
+                    photoURL: photoURL
+                });
+                e.target.reset();
+                setError('');
+                setPasswordError([]);
+                toast.success('Account created successfully!');
+                setLoading(false);
+                setIsAuthenticated(true)
+            })
+            .catch((error) => {
+                toast.error('Error creating user:', error.message);
+                setError(error.message);
+            });
 
-    // };
+    };
 
-    // const handleGoogleSignIn = () => {
-    //     signInWithPopup(auth, googleProvider)
-    //         .then((result) => {
-    //             // eslint-disable-next-line no-unused-vars
-    //             const user = result.user;
-    //             toast.success('Signin successfull');
-    //             setError('');
-    //             setLoading(false);
-    //             setIsAuthenticated(true);
-    //         })
-    //         .catch((error) => {
-    //             toast.error('Error creating user:', error.message);
-    //             setError(error.message);
-    //         });
-    // };
+    const handleGoogleSignIn = () => {
+        signInWithPopup(auth, googleProvider)
+            .then((result) => {
+                // eslint-disable-next-line no-unused-vars
+                const user = result.user;
+                toast.success('Signin successfull');
+                setError('');
+                setLoading(false);
+                setIsAuthenticated(true);
+            })
+            .catch((error) => {
+                toast.error('Error creating user:', error.message);
+                setError(error.message);
+            });
+    };
 
-    // if (isAuthenticated) {
-    //     return <Navigate Navigate to={`${location.state ? location.state : "/"}`
-    //     }></Navigate >
-    // }
+    if (isAuthenticated) {
+        return <Navigate Navigate to={`${location.state ? location.state : "/"}`
+        }></Navigate >
+    }
 
     return (
         <section className='min-h-screen py-20 px-4 flex items-center [&_input]:outline-0'>
@@ -113,7 +117,7 @@ const RegistrationForm = () => {
                     Create A Free Account
                 </h2>
 
-                <form /* onSubmit = { handleRegister } */ className="space-y-6">
+                <form onSubmit={handleRegister} className="space-y-6">
                     {/* Name Field */}
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium text-base-content mb-2">
@@ -173,7 +177,7 @@ const RegistrationForm = () => {
                                 placeholder="Password"
                                 required
                             />
-                            <span  /* onClick={() => setShowPassword(!showPassword)} onSubmit={handleRegister} */ className='absolute top-[50%] right-5 cursor-pointer hover:scale-120 translate-y-[-50%]'> {showPassword ? <FaEyeSlash /> : <FaEye />} </span>
+                            <span onClick={() => setShowPassword(!showPassword)} className='absolute top-[50%] right-5 cursor-pointer hover:scale-120 translate-y-[-50%]'> {showPassword ? <FaEyeSlash /> : <FaEye />} </span>
                         </div>
                         {passwordError.length > 0 && <ul className='gap-1 mt-2'>
                             {
@@ -223,7 +227,7 @@ const RegistrationForm = () => {
                     </button>
                     {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
                 </form>
-                <button  /* onClick={handleGoogleSignIn} */ className=" my-3 w-full border border-main hover:border-amber active:border-amber text-main font-medium py-4 px-5 rounded-lg transition-all duration-300 transform hover:scale-105 focus:ring-2 focus:ring-amber focus:ring-opacity-50 text-md cursor-pointer flex items-center justify-center gap-2"> <FcGoogle className='text-2xl' /> Signup with Google </button>
+                <button onClick={handleGoogleSignIn} className=" my-3 w-full border border-main hover:border-amber active:border-amber text-main font-medium py-4 px-5 rounded-lg transition-all duration-300 transform hover:scale-105 focus:ring-2 focus:ring-amber focus:ring-opacity-50 text-md cursor-pointer flex items-center justify-center gap-2"> <FcGoogle className='text-2xl' /> Signup with Google </button>
                 <p className='text-center text-normal'>Already have an account? <Link className='underline text-amber font-medium' to='/login'>Login</Link></p>
             </div>
         </section>

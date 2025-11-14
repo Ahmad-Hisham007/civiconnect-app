@@ -9,6 +9,12 @@ import { BsTicketPerforatedFill } from "react-icons/bs";
 import { BiSolidLogInCircle } from "react-icons/bi";
 import { FiMenu } from "react-icons/fi";
 import { IoMdClose } from "react-icons/io";
+import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
+import { RiLogoutCircleLine, RiUserStarLine } from "react-icons/ri";
+import { RiLogoutCircleRLine } from "react-icons/ri";
+import { FaArrowUpWideShort, FaPenToSquare, FaRegUser } from 'react-icons/fa6';
+
+
 
 
 const NavLinks = (<>
@@ -17,6 +23,11 @@ const NavLinks = (<>
     <li><NavLink to="/our-story">Our Story</NavLink></li>
     <li><NavLink to="/contact">Contact</NavLink></li>
 </>)
+const PrivLinks = (<>
+    <li><NavLink to="/auth/create-events"><FaPenToSquare /> Create Event</NavLink></li>
+    <li><NavLink to="/auth/joined-events"><RiUserStarLine /> Joined Events</NavLink></li>
+    <li><NavLink to="/auth/manage-events"><FaArrowUpWideShort /> Manage Events</NavLink></li>
+</>)
 
 const Header = () => {
     const { isDark } = useContext(ThemeContext);
@@ -24,6 +35,7 @@ const Header = () => {
     const [hidden, setHidden] = useState(false);
     const drawerCheckboxRef = useRef(null);
     const [isSticky, setIsSticky] = useState(false);
+    const { user, logOut } = useContext(AuthContext)
 
     useMotionValueEvent(scrollY, "change", (latest) => {
         if (latest > 50) {
@@ -58,7 +70,7 @@ const Header = () => {
             animate={{ y: hidden ? -100 : 0 }}
             transition={{ duration: 0.3 }}
         >
-            <nav className={`navbar w-full  p-3 rounded-[60px] justify-between ${isSticky
+            <nav className={`navbar w-full gap-6  p-3 rounded-[60px] justify-between ${isSticky
                 ? (isDark ? "bg-neutral-200" : "bg-purple-400")
                 : (isDark ? "bg-neutral-200" : "bg-[#ea99fab0]")
                 }`}>
@@ -113,7 +125,7 @@ const Header = () => {
                     </div>
                 </div>
                 {/* Logo */}
-                <div className="!width-auto grow-0! hi">
+                <div className="!width-auto grow-0!">
                     <Link className="text-xl font-bold" to="/">
                         <img
                             src={logo}
@@ -122,7 +134,22 @@ const Header = () => {
                         />
                     </Link>
                 </div>
+                <div className='dropdown cursor-pointer md:hidden block'>
+                    <div tabIndex={0} role="button" className="tooltip tooltip-bottom" data-tip={user.displayName || 'User Display Name'}>
 
+                        <div className=" font-semibold font-primary text-lg text-main hover:text-white hover:bg-main border-2 border-stable-100 cursor-pointer rounded-full w-12 h-12">
+                            {
+                                user.photoURL ? <img className='w-full h-full object-cover object-top rounded-full' src={user.photoURL} alt={`${user.displayName} name`} referrerPolicy="no-referrer" /> :
+                                    <FaRegUser />
+                            }
+                        </div>
+                    </div>
+                    <ul tabIndex="-1" className="gap-2 dropdown-content menu bg-base-100 [&_a]:text-base-200-content [&_a]:hover:bg-base-300 [&_a]:hover:text-base-200-content! [&_a]:active:bg-base-300 [&_a]:active:text-base-200-content! [&_a.active]:bg-base-300 [&_a.active]:text-base-200-content! rounded-box z-1 w-auto min-w-40 font-normal right-0 top-full mt-2 p-2 shadow-sm">
+                        {
+                            PrivLinks
+                        }
+                    </ul>
+                </div>
                 {/* Navigation Links */}
                 <div className="hidden lg:flex  flex-1 justify-center">
                     <ul className="menu menu-horizontal px-1 font-medium space-x-6 [&_li]:bg-transparent [&_li_a]:bg-transparent [&_li_a]:hover:opacity-70 [&_li_a]:hover:underline underline-offset-6 [&_li_a]:text-lg [&_li_a]:semi-bold [&_li_a]:text-base-100 [&_li_a.active]:opacity-70 [&_li_a.active]:underline">
@@ -130,8 +157,28 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="flex-auto grow-0 width-auto gap-5 hidden sm:flex">
-                    <Link to="/register" className="btn border-0 bg-primary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-secondary">Register Now <BsTicketPerforatedFill className='text-xl' /></Link>
-                    <Link to="/register" className="btn border-0 bg-secondary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-primary">Login <BiSolidLogInCircle className='text-xl' /></Link>
+                    {!user ? <>
+                        <Link to="/register" className="btn border-0 bg-primary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-secondary">Register Now <BsTicketPerforatedFill className='text-xl' /></Link>
+                        <Link to="/login" className="btn border-0 bg-secondary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-primary">Login <RiLogoutCircleRLine className='text-xl' /></Link>
+                    </> : <button onClick={logOut} className="btn border-0 bg-secondary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-primary">Logout <RiLogoutCircleLine className='text-xl' /></button>
+                    }
+                    <div className='dropdown cursor-pointer'>
+                        <div tabIndex={0} role="button" className="tooltip tooltip-bottom" data-tip={user.displayName || 'User Display Name'}>
+
+                            <div className=" font-semibold font-primary text-lg text-main hover:text-white hover:bg-main border-2 border-stable-100 cursor-pointer rounded-full w-12 h-12">
+                                {
+                                    user.photoURL ? <img className='w-full h-full object-cover object-top rounded-full' src={user.photoURL} alt={`${user.displayName} name`} referrerPolicy="no-referrer" /> :
+                                        <FaRegUser />
+                                }
+                            </div>
+                        </div>
+                        <ul tabIndex="-1" className="gap-2 dropdown-content menu bg-base-100 [&_a]:text-base-200-content [&_a]:hover:bg-base-300 [&_a]:hover:text-base-200-content! [&_a]:active:bg-base-300 [&_a]:active:text-base-200-content! [&_a.active]:bg-base-300 [&_a.active]:text-base-200-content! rounded-box z-1 w-auto min-w-40 font-normal right-0 top-full mt-2 p-2 shadow-sm">
+                            {
+                                PrivLinks
+                            }
+                        </ul>
+                    </div>
+
                 </div>
             </nav>
         </motion.header >

@@ -6,6 +6,7 @@ import { RouterProvider } from 'react-router'
 import Routes from './Routes/Routes.jsx'
 import ThemeGlobal from './Components/ThemeSwitcher/ThemeGlobal.jsx'
 import AuthProvider from './Contexts/AuthProvider/AuthProvider.jsx'
+import { Toaster } from 'react-hot-toast';
 
 
 
@@ -15,6 +16,9 @@ createRoot(document.getElementById('root')).render(
     <ThemeProvider>
       <ThemeGlobal>
         <AuthProvider>
+          <Toaster position='top-center' containerStyle={{
+            top: 120
+          }} />
           <RouterProvider router={Routes}></RouterProvider>
         </AuthProvider>
       </ThemeGlobal>
