@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { Link, Navigate, useLocation } from 'react-router';
+import { Link, Navigate, useLocation, useNavigate } from 'react-router';
 import { FcGoogle } from "react-icons/fc";
 import { auth, AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile } from 'firebase/auth';
@@ -16,7 +16,6 @@ const RegistrationForm = () => {
     const [passwordError, setPasswordError] = useState([]);
     const { setLoading } = useContext(AuthContext);
     const location = useLocation();
-
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
 
@@ -44,7 +43,7 @@ const RegistrationForm = () => {
         };
     };
 
-    const handleRegister = (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
         const name = e.target.name.value;
         const email = e.target.email.value;
@@ -67,41 +66,102 @@ const RegistrationForm = () => {
             return;
         }
 
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                updateProfile(user, {
-                    displayName: name,
-                    photoURL: photoURL
-                });
-                e.target.reset();
-                setError('');
-                setPasswordError([]);
-                toast.success('Account created successfully!');
-                setLoading(false);
-                setIsAuthenticated(true)
-            })
-            .catch((error) => {
-                toast.error('Error creating user:', error.message);
-                setError(error.message);
+        try {
+            setLoading(true);
+
+            //Create user account
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            // Update user profile
+            await updateProfile(user, {
+                displayName: name,
+                photoURL: photoURL
             });
+
+            const newUser = {
+                uid: user.uid,
+                displayName: name,
+                email: email,
+                photoURL: photoURL,
+                registeredAt: new Date().toISOString()
+            }
+            const response = await fetch('http://localhost:3000/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newUser)
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to create user in database');
+            }
+            // console.log(response.json())
+            // const userData = await response.json();
+
+            // Success
+            e.target.reset();
+            setError('');
+            setPasswordError([]);
+            setLoading(false);
+            setIsAuthenticated(true);
+            toast.success('Account created successfully!');
+
+        } catch (error) {
+            console.error('Registration failed:', error);
+            toast.error(`Registration failed: ${error.message}`);
+            setError(error.message);
+            setLoading(false);
+        }
 
     };
 
-    const handleGoogleSignIn = () => {
-        signInWithPopup(auth, googleProvider)
-            .then((result) => {
-                // eslint-disable-next-line no-unused-vars
-                const user = result.user;
-                toast.success('Signin successfull');
+    const handleGoogleSignIn = async () => {
+
+        try {
+            const result = await signInWithPopup(auth, googleProvider);
+            // eslint-disable-next-line no-unused-vars
+            const user = result.user;
+
+            const newUser = {
+                uid: user.uid,
+                displayName: user.displayName,
+                email: user.email,
+                photoURL: user.photoURL,
+                registeredAt: new Date().toISOString()
+            }
+            console.log(newUser)
+            const response = await fetch('http://localhost:3000/users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newUser)
+            });
+            const data = await response.json();
+
+            if (user && !response.ok) {
+                setError(data.error);
+                setLoading(false);
+                setIsAuthenticated(true);
+                toast.success(`${data.error}, redirecting...`);
+            } else if (response.insertedId) {
+                console.log(data, response)
+                toast.success('Signup successfull');
                 setError('');
                 setLoading(false);
                 setIsAuthenticated(true);
-            })
-            .catch((error) => {
-                toast.error('Error creating user:', error.message);
-                setError(error.message);
-            });
+            }
+
+
+        }
+
+        catch (error) {
+            console.log(error)
+            toast.error('Error creating user:', error.message || error.error);
+            setError(error.message);
+        };
     };
 
     if (isAuthenticated) {
