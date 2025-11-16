@@ -1,11 +1,74 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { ThemeContext } from '../../Contexts/ThemeContext';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { DataLoadingContext } from '../../Contexts/DataLoading';
+import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
+import toast from 'react-hot-toast';
 
 const CreateEventForm = () => {
     const [error, setError] = useState('');
     const [startDate, setStartDate] = useState(new Date());
+    const { startLoading } = useContext(DataLoadingContext);
+    const { user } = useContext(AuthContext);
+
+
+    const handleCreateEvent = (e) => {
+        e.preventDefault();
+
+        const title = e.target.title.value;
+        const description = e.target.description.value;
+        const image = e.target.photoURL.value;
+        const type = e.target.eventType.value;
+        const location = e.target.location.value;
+        const date = e.target.date.value;
+        const price = e.target.price.value;
+        console.log(title,
+            description,
+            image,
+            type,
+            location,
+            date,
+            price)
+
+        const newEvent = {
+            title,
+            description,
+            image,
+            type,
+            location,
+            date,
+            price,
+            organizer: user.email
+        }
+        function fetchData() {
+
+
+            const newEventPormise = fetch("http://localhost:3000/events", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newEvent)
+            })
+                .then(res => res.json())
+                .then(data => console.log(data))
+                .catch((err) => {
+                    setError(err.message)
+                    toast.error(err.message)
+                })
+
+            startLoading(
+                newEventPormise,
+                'Creating new event',
+                'Event created successfully',
+                'Failed creating new event')
+
+        }
+        fetchData();
+        e.target.reset();
+    }
+
     return (
         <section className='min-h-screen py-20 px-4 flex items-center [&_input]:outline-0'>
             <div className="bg-base-200 rounded-2xl shadow-lg border border-base-300 p-8 max-w-4xl w-full mx-auto" data-aos="fade-down">
@@ -15,7 +78,7 @@ const CreateEventForm = () => {
                     Launch your own event
                 </h2>
 
-                <form /* onSubmit = { handleRegister } */ className="space-y-6">
+                <form onSubmit={handleCreateEvent} className="space-y-6">
                     {/* Title Field */}
                     <div>
                         <label htmlFor="title" className="block text-sm font-normal text-base-content mb-2">
@@ -63,24 +126,23 @@ const CreateEventForm = () => {
                     <div>
                         <fieldset className="fieldset w-full">
                             <legend className="fieldset-legend text-sm font-normal">Event type</legend>
-                            <select defaultValue="Pick a browser" className={`select w-full bg-base-200 border px-4 py-3 h-auto border-base-300  focus:ring-2 focus:ring-amber focus:border-amber transition-all duration-300 outline-0`} >
-                                <div className='bg-white text-stable-100 rounded-lg'>
-                                    <option disabled={true}>Pick an event type</option>
-                                    <option>Conference</option>
-                                    <option>Seminar</option>
-                                    <option>Workshop</option>
-                                    <option>Offline</option>
-                                    <option>Cleanup</option>
-                                    <option>Plantation</option>
-                                    <option>Donation</option>
-                                </div>
+                            <select defaultValue="Pick a browser" name='eventType' className={`select w-full bg-base-200 border px-4 py-3 h-auto border-base-300  focus:ring-2 focus:ring-amber focus:border-amber transition-all duration-300 outline-0`} >
+                                <option disabled={true}>Pick an event type</option>
+                                <option>Conference</option>
+                                <option>Seminar</option>
+                                <option>Workshop</option>
+                                <option>Offline</option>
+                                <option>Cleanup</option>
+                                <option>Plantation</option>
+                                <option>Donation</option>
+
 
                             </select>
                             {/* <span className="label">Optional</span> */}
                         </fieldset>
                     </div>
 
-                    {/* Password Field */}
+                    {/* Location Address */}
                     <div>
                         <label htmlFor="location" className="block text-sm font-normal text-base-content mb-2">
                             Location address *
@@ -98,13 +160,30 @@ const CreateEventForm = () => {
 
                     </div>
 
-                    {/* Confirm Password Field */}
-                    <div className='[&_.react-datepicker-wrapper]:w-full'>
-                        <label htmlFor="confirmPassword" className="block text-sm font-normal text-base-content mb-2">
-                            Confirm Password *
-                        </label>
-                        <DatePicker className='w-full!  px-4 py-3 border border-base-300 rounded-lg focus:ring-2 focus:ring-amber focus:border-amber transition-all duration-300' selected={startDate} onChange={(date) => setStartDate(date)} minDate={new Date()} placeholderText="MM/DD/YYYY" />
+                    {/* Event Date and price */}
+                    <div className='flex gap-6 md:items-center items-stretch flex-col md:flex-row' >
+                        <div className='[&_.react-datepicker-wrapper]:w-full w-full'>
+                            <label htmlFor="eventDate" className="block text-sm font-normal text-base-content mb-2">
+                                Event date *
+                            </label>
+                            <DatePicker name='date' className='w-full!  px-4 py-3 border border-base-300 rounded-lg focus:ring-2 focus:ring-amber focus:border-amber transition-all duration-300' selected={startDate} onChange={(date) => setStartDate(date)} minDate={new Date()} placeholderText="MM/DD/YYYY" dateFormat="dd MMM, yyyy" />
 
+                        </div>
+                        <div>
+                            <label htmlFor="price" className="block md:max-w-30 max-w-full text-sm font-normal text-base-content mb-2">
+                                Event price in BDT*
+                            </label>
+
+                            <input
+                                type="text"
+                                id="price"
+                                name="price"
+                                className="w-full px-4 py-3 border border-base-300 rounded-lg focus:ring-2 focus:ring-amber focus:border-amber transition-all duration-300"
+                                placeholder="E.g. 99"
+                                required
+                            />
+
+                        </div>
                     </div>
 
 

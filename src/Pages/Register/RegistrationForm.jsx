@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { Link, Navigate, useLocation, useNavigate } from 'react-router';
+import { Link, Navigate, useLocation } from 'react-router';
 import { FcGoogle } from "react-icons/fc";
 import { auth, AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile } from 'firebase/auth';
@@ -86,16 +86,17 @@ const RegistrationForm = () => {
                 photoURL: photoURL,
                 registeredAt: new Date().toISOString()
             }
-            const response = await fetch('http://localhost:3000/users', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(newUser)
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to create user in database');
+            if (user.uid) {
+                const response = await fetch('http://localhost:3000/users', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(newUser)
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to create user in database');
+                }
             }
             // console.log(response.json())
             // const userData = await response.json();

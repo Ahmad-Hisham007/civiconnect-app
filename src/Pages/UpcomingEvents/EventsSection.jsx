@@ -1,97 +1,61 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { ThemeContext } from '../../Contexts/ThemeContext';
 import { GrLocation } from "react-icons/gr";
 import { BiCategoryAlt } from "react-icons/bi";
 import { Link } from 'react-router';
 import { HiArrowNarrowRight } from "react-icons/hi";
-
+import AuthProvider from '../../Contexts/AuthProvider/AuthProvider';
+import { DataLoadingContext } from '../../Contexts/DataLoading';
+import Loading from '../../Components/Loading/Loading';
+import getTodayInFormat from '../../Utils/getTodayInFormat.js/getTodayInFormat';
 
 
 const EventsSection = () => {
-    const { isDark } = useContext(ThemeContext)
+    const { isDark } = useContext(ThemeContext);
+    const { isDataLoading, startLoading } = useContext(DataLoadingContext);
+    const [events, setEvents] = useState([]);
+    const hasFetched = useRef(false);
 
-    const events = [
-        {
-            id: 1,
-            title: "Digital Bangladesh Summit 2026",
-            description: "Transforming traditional businesses into digital enterprises with cutting-edge technology",
-            image: "https://images.pexels.com/photos/716276/pexels-photo-716276.jpeg?_gl=1*1kji8jo*_ga*ODIyMzk2ODEwLjE3NjE0NzExODU.*_ga_8JE65Q40S6*czE3NjI5NzYwMzgkbzUkZzEkdDE3NjI5NzYwNzIkajI2JGwwJGgw",
-            date: "15, Mar - 2026",
-            location: "Dhaka, Bangladesh",
-            type: "Seminar",
-            attendees: "200+ People registered",
-            buttonText: "Buy Ticket Now"
-        },
-        {
-            id: 2,
-            title: "Startup Dhaka Innovation Workshop",
-            description: "Hands-on workshop for aspiring entrepreneurs and startup founders",
-            image: "https://images.pexels.com/photos/716276/pexels-photo-716276.jpeg?_gl=1*1kji8jo*_ga*ODIyMzk2ODEwLjE3NjE0NzExODU.*_ga_8JE65Q40S6*czE3NjI5NzYwMzgkbzUkZzEkdDE3NjI5NzYwNzIkajI2JGwwJGgw",
-            date: "22, Apr - 2026",
-            location: "Bangladesh ICT Incubator",
-            type: "Workshop",
-            attendees: "150+ People registered",
-            buttonText: "Buy Ticket Now"
-        },
-        {
-            id: 3,
-            title: "Fintech Revolution Webinar",
-            description: "Exploring the future of digital payments and financial technology in Bangladesh",
-            image: "https://images.pexels.com/photos/716276/pexels-photo-716276.jpeg?_gl=1*1kji8jo*_ga*ODIyMzk2ODEwLjE3NjE0NzExODU.*_ga_8JE65Q40S6*czE3NjI5NzYwMzgkbzUkZzEkdDE3NjI5NzYwNzIkajI2JGwwJGgw",
-            date: "08, May - 2026",
-            location: "Online Event",
-            type: "Webinar",
-            attendees: "300+ People registered",
-            buttonText: "Join Free"
-        },
-        {
-            id: 4,
-            title: "RMG Industry 4.0 Conference",
-            description: "Modernizing ready-made garments sector with automation and AI integration",
-            image: "https://images.pexels.com/photos/716276/pexels-photo-716276.jpeg?_gl=1*1kji8jo*_ga*ODIyMzk2ODEwLjE3NjE0NzExODU.*_ga_8JE65Q40S6*czE3NjI5NzYwMzgkbzUkZzEkdDE3NjI5NzYwNzIkajI2JGwwJGgw",
-            date: "18, Jun - 2026",
-            location: "Chittagong, Bangladesh",
-            type: "Conference",
-            attendees: "180+ People registered",
-            buttonText: "Buy Ticket Now"
-        },
-        {
-            id: 5,
-            title: "AgriTech Farmers Meetup",
-            description: "Connecting farmers with technology solutions for sustainable agriculture",
-            image: "https://images.pexels.com/photos/716276/pexels-photo-716276.jpeg?_gl=1*1kji8jo*_ga*ODIyMzk2ODEwLjE3NjE0NzExODU.*_ga_8JE65Q40S6*czE3NjI5NzYwMzgkbzUkZzEkdDE3NjI5NzYwNzIkajI2JGwwJGgw",
-            date: "05, Jul - 2026",
-            location: "Rajshahi, Bangladesh",
-            type: "Offline",
-            attendees: "250+ People registered",
-            buttonText: "Register Now"
-        },
-        {
-            id: 6,
-            title: "Bangladesh E-commerce Expo",
-            description: "Largest gathering of e-commerce entrepreneurs and digital marketers",
-            image: "https://images.pexels.com/photos/716276/pexels-photo-716276.jpeg?_gl=1*1kji8jo*_ga*ODIyMzk2ODEwLjE3NjE0NzExODU.*_ga_8JE65Q40S6*czE3NjI5NzYwMzgkbzUkZzEkdDE3NjI5NzYwNzIkajI2JGwwJGgw",
-            date: "12, Aug - 2026",
-            location: "Dhaka, Bangladesh",
-            type: "Exhibition",
-            attendees: "400+ People registered",
-            buttonText: "Get Pass"
+    useEffect(() => {
+        if (hasFetched.current) return;
+        hasFetched.current = true;
+        function fetchData() {
+            const today = getTodayInFormat();
+            console.log(today);
+            const dataPromise = fetch(`http://localhost:3000/events?filterDate=${encodeURIComponent(today)}`)
+                .then(res => res.json())
+                .then(data => {
+                    setEvents(data);
+                    return data;
+                });
+
+            startLoading(
+                dataPromise,
+                'Loading events...',
+                'Events loaded',
+                'Failed to load events'
+            );
         }
-    ];
+        fetchData();
+    }, []);
+    console.log(events)
 
+    if (isDataLoading) {
+        return <Loading />
+    }
     return (
         <div className="max-w-[1440px] mx-auto px-4 py-12">
             {/* Header Section */}
             <div className="text-center mb-16">
-                <h1 className="text-4xl font-bold mb-4">Business Growth Sessions Lineup</h1>
+                <h1 className="text-4xl font-bold mb-4">Social Development Sessions Lineup</h1>
                 <p className={`text-xl ${isDark ? "text-gray-400" : "text-gray-600"}`} >The Future Unfolds - Day by Day</p>
             </div>
 
             {/* Events List */}
             <div className="space-y-8">
                 {events.map((event) => (
-                    <div className={`flex flex-col lg:flex-row p-5 lg:gap-9 gap-5 text-base-content  border   border-purple-300 ${isDark ? "bg-[#fbb4fd54] [&_p]:text-white" : "bg-purple-50 [&_p]:text-gray-600"} rounded-2xl`} >
+                    <div key={event._id} className={`flex flex-col lg:flex-row p-5 lg:gap-9 gap-5 text-base-content  border   border-purple-300 ${isDark ? "bg-[#fbb4fd54] [&_p]:text-white" : "bg-purple-50 [&_p]:text-gray-600"} rounded-2xl`} >
                         <div className='flex-1'>
                             <img src={event.image} className='rounded-2xl max-h-[190px] object-cover w-full' />
                         </div>
@@ -120,7 +84,7 @@ const EventsSection = () => {
                                 <p className='text-base font-semibold'>{event.type}</p>
                             </div>
                             <div className='mt-6 lg:w-auto w-full'>
-                                <h5 className='text-base lg:text-right text-center'>Claim Your <strong>Spot</strong></h5>
+                                <h5 className='text-base lg:text-right text-center'>Claim Your Spot at <strong>{event.price > 0 ? `৳${event.price}` : `Free`}</strong></h5>
                                 <Link to="/register" className="btn mt-3 border-0 bg-linear-to-br from-stable-100 via-primary to-light-accent hover:opacity-80 transition-all duration-200  text-white text-base p-[17px_30px]! h-auto! rounded-[60px] shadow-none flex gap-3 items-center hover:text-white hover:bg-primary"> Join now <HiArrowNarrowRight className='text-xl' /></Link>
                             </div>
                         </div>

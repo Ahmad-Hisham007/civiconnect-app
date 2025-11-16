@@ -14,6 +14,7 @@ import ErrorPage from '../Components/ErrorPage/ErrorPage';
 import PrivateRoute from './PrivateRoute';
 import UpcomingPage from '../Pages/UpcomingPage/UpcomingPage';
 
+
 const Routes = createBrowserRouter([
     {
         path: "/",
