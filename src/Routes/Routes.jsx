@@ -13,7 +13,7 @@ import SingleEvent from '../Pages/SingleEvent/SingleEvent';
 import ErrorPage from '../Components/ErrorPage/ErrorPage';
 import PrivateRoute from './PrivateRoute';
 import UpcomingPage from '../Pages/UpcomingPage/UpcomingPage';
-
+import { DataLoadingContext } from '../Contexts/DataLoading';
 
 const Routes = createBrowserRouter([
     {
@@ -38,8 +38,8 @@ const Routes = createBrowserRouter([
                 element: <UpcomingEvents></UpcomingEvents>
             },
             {
-                path: "/single-event",
-                element: <SingleEvent />,
+                path: "/single-event/:id",
+                element: < SingleEvent />
             },
             {
                 path: "/register",

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { ThemeContext } from '../../Contexts/ThemeContext';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -166,7 +166,7 @@ const CreateEventForm = () => {
                             <label htmlFor="eventDate" className="block text-sm font-normal text-base-content mb-2">
                                 Event date *
                             </label>
-                            <DatePicker name='date' className='w-full!  px-4 py-3 border border-base-300 rounded-lg focus:ring-2 focus:ring-amber focus:border-amber transition-all duration-300' selected={startDate} onChange={(date) => setStartDate(date)} minDate={new Date()} placeholderText="MM/DD/YYYY" dateFormat="dd MMM, yyyy" />
+                            <DatePicker name='date' className='w-full!  px-4 py-3 border border-base-300 rounded-lg focus:ring-2 focus:ring-amber focus:border-amber transition-all duration-300' selected={startDate} onChange={(date) => setStartDate(date)} minDate={new Date()} placeholderText="MM/DD/YYYY" dateFormat="yyyy-MMM-dd" />
 
                         </div>
                         <div>
