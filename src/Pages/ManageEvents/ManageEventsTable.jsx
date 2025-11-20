@@ -1,80 +1,100 @@
 
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ThemeContext } from '../../Contexts/ThemeContext';
 import UpdateEventForm from './UpdateEventForm';
+import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
+import { DataLoadingContext } from '../../Contexts/DataLoading';
+import Loading from '../../Components/Loading/Loading';
+import { Link } from 'react-router';
+import toast from 'react-hot-toast';
 
 const ManageEventsTable = () => {
     const { isDark } = useContext(ThemeContext);
+    const [events, setEvents] = useState([]);
+    const [updateEventData, setUpdateEventData] = useState(null)
+    const [isUpdateEventDataLoading, setIsUpdateEventDataLoading] = useState(false)
+    const { isDataLoading, startLoading } = useContext(DataLoadingContext);
+    const { user } = useContext(AuthContext);
+    const hasFetched = useRef(false);
     const updateEventModalRef = useRef(null)
 
-    const events = [
-        {
-            id: 1,
-            title: "Digital Bangladesh Summit 2026",
-            description: "Transforming traditional businesses into digital enterprises with cutting-edge technology",
-            image: "https://images.pexels.com/photos/716276/pexels-photo-716276.jpeg?_gl=1*1kji8jo*_ga*ODIyMzk2ODEwLjE3NjE0NzExODU.*_ga_8JE65Q40S6*czE3NjI5NzYwMzgkbzUkZzEkdDE3NjI5NzYwNzIkajI2JGwwJGgw",
-            date: "15, Mar - 2026",
-            location: "Dhaka, Bangladesh",
-            type: "Seminar",
-            attendees: "200+ People registered",
-            buttonText: "Buy Ticket Now"
-        },
-        {
-            id: 2,
-            title: "Startup Dhaka Innovation Workshop",
-            description: "Hands-on workshop for aspiring entrepreneurs and startup founders",
-            image: "https://images.pexels.com/photos/716276/pexels-photo-716276.jpeg?_gl=1*1kji8jo*_ga*ODIyMzk2ODEwLjE3NjE0NzExODU.*_ga_8JE65Q40S6*czE3NjI5NzYwMzgkbzUkZzEkdDE3NjI5NzYwNzIkajI2JGwwJGgw",
-            date: "22, Apr - 2026",
-            location: "Bangladesh ICT Incubator",
-            type: "Workshop",
-            attendees: "150+ People registered",
-            buttonText: "Buy Ticket Now"
-        },
-        {
-            id: 3,
-            title: "Fintech Revolution Webinar",
-            description: "Exploring the future of digital payments and financial technology in Bangladesh",
-            image: "https://images.pexels.com/photos/716276/pexels-photo-716276.jpeg?_gl=1*1kji8jo*_ga*ODIyMzk2ODEwLjE3NjE0NzExODU.*_ga_8JE65Q40S6*czE3NjI5NzYwMzgkbzUkZzEkdDE3NjI5NzYwNzIkajI2JGwwJGgw",
-            date: "08, May - 2026",
-            location: "Online Event",
-            type: "Webinar",
-            attendees: "300+ People registered",
-            buttonText: "Join Free"
-        },
-        {
-            id: 4,
-            title: "RMG Industry 4.0 Conference",
-            description: "Modernizing ready-made garments sector with automation and AI integration",
-            image: "https://images.pexels.com/photos/716276/pexels-photo-716276.jpeg?_gl=1*1kji8jo*_ga*ODIyMzk2ODEwLjE3NjE0NzExODU.*_ga_8JE65Q40S6*czE3NjI5NzYwMzgkbzUkZzEkdDE3NjI5NzYwNzIkajI2JGwwJGgw",
-            date: "18, Jun - 2026",
-            location: "Chittagong, Bangladesh",
-            type: "Conference",
-            attendees: "180+ People registered",
-            buttonText: "Buy Ticket Now"
-        },
-        {
-            id: 5,
-            title: "AgriTech Farmers Meetup",
-            description: "Connecting farmers with technology solutions for sustainable agriculture",
-            image: "https://images.pexels.com/photos/716276/pexels-photo-716276.jpeg?_gl=1*1kji8jo*_ga*ODIyMzk2ODEwLjE3NjE0NzExODU.*_ga_8JE65Q40S6*czE3NjI5NzYwMzgkbzUkZzEkdDE3NjI5NzYwNzIkajI2JGwwJGgw",
-            date: "05, Jul - 2026",
-            location: "Rajshahi, Bangladesh",
-            type: "Offline",
-            attendees: "250+ People registered",
-            buttonText: "Register Now"
-        },
-        {
-            id: 6,
-            title: "Bangladesh E-commerce Expo",
-            description: "Largest gathering of e-commerce entrepreneurs and digital marketers",
-            image: "https://images.pexels.com/photos/716276/pexels-photo-716276.jpeg?_gl=1*1kji8jo*_ga*ODIyMzk2ODEwLjE3NjE0NzExODU.*_ga_8JE65Q40S6*czE3NjI5NzYwMzgkbzUkZzEkdDE3NjI5NzYwNzIkajI2JGwwJGgw",
-            date: "12, Aug - 2026",
-            location: "Dhaka, Bangladesh",
-            type: "Exhibition",
-            attendees: "400+ People registered",
-            buttonText: "Get Pass"
+    useEffect(() => {
+
+        const fetchEvents = async () => {
+            if (hasFetched.current) return;
+            hasFetched.current = true;
+            try {
+                const eventsPromise = fetch(`http://localhost:3000/manage-events?email=${user.email}`).then(async (res) => {
+                    const data = await res.json();
+                    console.log(res)
+                    console.log(data)
+                    if (!res.ok) {
+                        console.log(res)
+                        toast.error(data.error);
+                        throw new Error(data.error)
+                    }
+                    const sortedEvents = [...data].sort((a, b) => new Date(b.date) - new Date(a.date));
+                    setEvents(sortedEvents)
+
+                })
+                startLoading(eventsPromise, "Loading events", "events loaded succesfully", "No events found")
+
+            } catch (err) {
+                console.error(err.message)
+                toast.error(err.message)
+            }
         }
-    ];
+        fetchEvents();
+
+    }, [user.email])
+
+    const loadEventDetails = (id) => {
+        setIsUpdateEventDataLoading(true)
+        updateEventModalRef.current.showModal();
+        try {
+
+            const eventsPromise = fetch(`http://localhost:3000/events/${id}`).then(async (res) => {
+                const data = await res.json();
+                console.log(res)
+                console.log(data)
+                if (!res.ok) {
+                    console.log(res)
+                    toast.error(data.error);
+                    throw new Error(data.error)
+                }
+                setUpdateEventData(data)
+                setIsUpdateEventDataLoading(false)
+            })
+            startLoading(eventsPromise, "Loading event data", "event loaded succesfully", "No event found")
+
+
+        } catch (err) {
+            console.error(err.message)
+            toast.error(err.message)
+        }
+    }
+
+    const handleEventUpdate = (updatedData) => {
+        setEvents(prevEvents =>
+            prevEvents.map(event =>
+                event._id === updatedData._id ? updatedData : event
+            )
+        );
+    }
+
+
+    if (isDataLoading && !isUpdateEventDataLoading) {
+        return <Loading />
+    };
+    if (!events.length > 0) {
+        return (
+            <div className='min-h-screen flex flex-col gap-5 justify-center items-center'>
+                <h3 className='text-3xl'>No events found</h3>
+                <p>Please create a new event</p>
+                <Link to="/auth/create-events" className="btn border-0 text-base-100 bg-base-content text-base p-[13px_24px]! h-auto! rounded-[60px] shadow-none flex gap-3 items-center hover:text-white hover:bg-primary"> Create Event </Link>
+            </div>
+        )
+    };
     return (
         <section>
             <div className='max-w-[1300px] mx-auto py-20 px-4'>
@@ -102,11 +122,11 @@ const ManageEventsTable = () => {
                             {/* row 1 */}
 
                             {
-                                events.map(event => {
-                                    return <tr key={event.id}>
+                                events.map((event, index) => {
+                                    return <tr key={event._id}>
                                         <th>
                                             <label>
-                                                {event.id}
+                                                {index + 1}
                                             </label>
                                         </th>
                                         <td>
@@ -131,8 +151,7 @@ const ManageEventsTable = () => {
                                         <td>Free</td>
                                         <th>
                                             <div className='flex gap-3 items-center'>
-                                                <button onClick={() => updateEventModalRef.current.showModal()} className="btn btn-ghost btn-xs font-medium bg-base-content text-base-100">Update</button>
-                                                <button className="btn btn-ghost btn-xs font-medium bg-base-300 text-stable-100">Update</button>
+                                                <button onClick={() => loadEventDetails(event._id)} className="btn btn-ghost btn-xs font-medium bg-base-content text-base-100">Update</button>
                                             </div>
                                         </th>
                                     </tr>
@@ -166,10 +185,11 @@ const ManageEventsTable = () => {
                         </h2>
                         <div className="modal-action">
                             <form method="dialog " onSubmit={(e) => e.preventDefault}>
-                                {/* if there is a button in form, it will close the modal */}
-                                <UpdateEventForm />
-
                             </form>
+                            {/* if there is a button in form, it will close the modal */}
+                            <UpdateEventForm updateEventData={updateEventData} isDataLoading={isDataLoading} onEventUpdate={handleEventUpdate} closeModal={() => updateEventModalRef.current.close()} />
+
+
                         </div>
                     </div>
                 </div>

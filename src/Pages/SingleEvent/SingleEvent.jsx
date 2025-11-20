@@ -3,7 +3,7 @@ import HeroSection from './HeroSection';
 import { ThemeContext } from '../../Contexts/ThemeContext';
 import { BiCategoryAlt } from "react-icons/bi";
 import { HiArrowNarrowRight } from "react-icons/hi";
-import { Link, useParams } from 'react-router';
+import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-router';
 import { DataLoadingContext } from '../../Contexts/DataLoading';
 import Loading from '../../Components/Loading/Loading';
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
@@ -17,6 +17,8 @@ const SingleEvent = () => {
     const [event, setEvent] = useState(null);
     const { startLoading } = useContext(DataLoadingContext);
     const hasFetched = useRef(false);
+    const location = useLocation();
+    const navigate = useNavigate()
 
 
     useEffect(() => {
@@ -44,6 +46,12 @@ const SingleEvent = () => {
 
 
     const addJoinedEvent = async (event) => {
+        if (!user) {
+            toast.error("To join the event, user needs to login first")
+            navigate("/login", { state: location.pathname })
+            return
+
+        }
         const newJoinedEvent = {
             eventId: id,
             date: event.date,

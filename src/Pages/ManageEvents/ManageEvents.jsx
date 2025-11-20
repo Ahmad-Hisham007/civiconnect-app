@@ -5,7 +5,7 @@ import ManageEventsTable from './ManageEventsTable';
 const ManageEvents = () => {
     return (
         <>
-            <HeroSection title={"Create Event"} />
+            <HeroSection title={"Manage Events"} />
             <ManageEventsTable />
         </>
     );
