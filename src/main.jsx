@@ -8,8 +8,17 @@ import ThemeGlobal from './Components/ThemeSwitcher/ThemeGlobal.jsx'
 import AuthProvider from './Contexts/AuthProvider/AuthProvider.jsx'
 import { Toaster } from 'react-hot-toast';
 import DataLoading from './Contexts/DataLoading.jsx'
+import 'aos/dist/aos.css';
+import Aos from 'aos'
 
-
+// Initialize AOS
+Aos.init({
+  duration: 800,
+  easing: 'ease-in-out',
+  once: false,
+  mirror: true,
+  offset: 100,
+});
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

@@ -98,8 +98,7 @@ const RegistrationForm = () => {
                     throw new Error('Failed to create user in database');
                 }
             }
-            // console.log(response.json())
-            // const userData = await response.json();
+
 
             // Success
             e.target.reset();
@@ -132,7 +131,7 @@ const RegistrationForm = () => {
                 photoURL: user.photoURL,
                 registeredAt: new Date().toISOString()
             }
-            console.log(newUser)
+
             const response = await fetch('http://localhost:3000/users', {
                 method: 'POST',
                 headers: {
@@ -148,7 +147,7 @@ const RegistrationForm = () => {
                 setIsAuthenticated(true);
                 toast.success(`${data.error}, redirecting...`);
             } else if (response.insertedId) {
-                console.log(data, response)
+
                 toast.success('Signup successfull');
                 setError('');
                 setLoading(false);
@@ -159,7 +158,7 @@ const RegistrationForm = () => {
         }
 
         catch (error) {
-            console.log(error)
+
             toast.error('Error creating user:', error.message || error.error);
             setError(error.message);
         };

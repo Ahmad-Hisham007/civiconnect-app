@@ -24,14 +24,12 @@ export const AuthProvider = ({ children }) => {
     const logOut = () => {
         return signOut(auth)
     }
-    console.log(user)
     const authData = {
         user,
         logOut,
         loading,
         setLoading
     };
-    console.log(user)
     return <AuthContext.Provider value={authData} >
         {children}
     </AuthContext.Provider>

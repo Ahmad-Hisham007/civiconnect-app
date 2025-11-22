@@ -5,10 +5,12 @@ import { Link } from 'react-router';
 import Loading from '../../Components/Loading/Loading';
 import toast, { Toaster } from 'react-hot-toast';
 import { DataLoadingContext } from '../../Contexts/DataLoading';
+import { ThemeContext } from '../../Contexts/ThemeContext';
 
 const UpdateEventForm = ({ updateEventData, onEventUpdate, closeModal }) => {
     const [startDate, setStartDate] = useState(null);
     const { isDataLoading, startLoading } = useContext(DataLoadingContext);
+    const { isDark } = useContext(ThemeContext)
 
     useEffect(() => {
         if (updateEventData?.date) {
@@ -42,7 +44,7 @@ const UpdateEventForm = ({ updateEventData, onEventUpdate, closeModal }) => {
                     toast.error(data.error)
                     throw new Error("Failed to update event");
                 }
-                console.log(data)
+
                 onEventUpdate({ ...updateEventData, ...formData })
             })
 
@@ -120,7 +122,7 @@ const UpdateEventForm = ({ updateEventData, onEventUpdate, closeModal }) => {
                 <div>
                     <fieldset className="fieldset w-full">
                         <legend className="fieldset-legend text-sm font-normal">Event type</legend>
-                        <select defaultValue={updateEventData?.type || ""} name='type' className={`select w-full bg-base-200 border px-4 py-3 h-auto border-base-300  focus:ring-2 focus:ring-amber focus:border-amber transition-all duration-300 outline-0`} >
+                        <select defaultValue={updateEventData?.type || ""} name='type' className={`select w-full ${isDark ? "bg-[#966597]" : "bg-base-200"} border px-4 py-3 h-auto border-base-300  focus:ring-2 focus:ring-amber focus:border-amber transition-all duration-300 outline-0`} >
 
                             <option disabled={true}>Pick an event type</option>
                             <option>Conference</option>
@@ -165,19 +167,6 @@ const UpdateEventForm = ({ updateEventData, onEventUpdate, closeModal }) => {
 
                 </div>
 
-                {/* Terms and Conditions */}
-                <div className="flex items-center">
-                    <input
-                        type="checkbox"
-                        id="terms"
-                        name="terms"
-                        className="w-4 h-4 text-base bg-gray-100 border-base-300 rounded"
-                        required
-                    />
-                    <label htmlFor="terms" className="ml-2 text-sm text-base-300-content">
-                        You accept our <a href="#" className="text-amber hover:underline">Terms and Conditions</a> and <a href="#" className="text-amber hover:underline">Privacy Policy</a>
-                    </label>
-                </div>
                 {/* Submit Button */}
                 <button
                     type="submit"

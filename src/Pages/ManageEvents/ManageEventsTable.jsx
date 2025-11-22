@@ -7,6 +7,7 @@ import { DataLoadingContext } from '../../Contexts/DataLoading';
 import Loading from '../../Components/Loading/Loading';
 import { Link } from 'react-router';
 import toast from 'react-hot-toast';
+import formatDateForDisplay from '../../Utils/formatDate';
 
 const ManageEventsTable = () => {
     const { isDark } = useContext(ThemeContext);
@@ -26,10 +27,8 @@ const ManageEventsTable = () => {
             try {
                 const eventsPromise = fetch(`http://localhost:3000/manage-events?email=${user.email}`).then(async (res) => {
                     const data = await res.json();
-                    console.log(res)
-                    console.log(data)
+
                     if (!res.ok) {
-                        console.log(res)
                         toast.error(data.error);
                         throw new Error(data.error)
                     }
@@ -55,10 +54,9 @@ const ManageEventsTable = () => {
 
             const eventsPromise = fetch(`http://localhost:3000/events/${id}`).then(async (res) => {
                 const data = await res.json();
-                console.log(res)
-                console.log(data)
+
                 if (!res.ok) {
-                    console.log(res)
+
                     toast.error(data.error);
                     throw new Error(data.error)
                 }
@@ -96,7 +94,7 @@ const ManageEventsTable = () => {
         )
     };
     return (
-        <section>
+        <section data-aos="fade-down">
             <div className='max-w-[1300px] mx-auto py-20 px-4'>
                 <div className="overflow-x-auto">
 
@@ -138,7 +136,7 @@ const ManageEventsTable = () => {
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <div className="font-bold">{event.date}</div>
+                                                    <div className="font-bold">{formatDateForDisplay(event.date)}</div>
                                                     <div className="text-sm opacity-50">{event.location}</div>
                                                 </div>
                                             </div>

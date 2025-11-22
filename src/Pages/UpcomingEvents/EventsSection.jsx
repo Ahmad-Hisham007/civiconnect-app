@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { ThemeContext } from '../../Contexts/ThemeContext';
 import { GrLocation } from "react-icons/gr";
@@ -28,10 +28,11 @@ const EventsSection = () => {
     const [isSearching, setIsSearching] = useState(false);
 
 
+    // eslint-disable-next-line no-unused-vars
     function fetchData(search = searchTerm, type = selectedType) {
         try {
             const today = getTodayInFormat();
-            console.log(today);
+
 
             let url = `http://localhost:3000/events?filterDate=${encodeURIComponent(today)}`;
 
@@ -40,11 +41,12 @@ const EventsSection = () => {
             }
 
             if (selectedType && selectedType !== 'all') {
-                url += `&type=${selectedType}`;
+                url += `&type=${type}`;
             }
-            console.log(url)
+
 
             setIsSearching(true)
+            // eslint-disable-next-line no-unused-vars
             const dataPromise = fetch(url)
                 .then(async res => {
                     const data = await res.json();
@@ -55,7 +57,7 @@ const EventsSection = () => {
                     }
                     setEvents(data);
                     setIsSearching(false);
-                    console.log(data)
+
                     return data;
                 })
 
@@ -68,7 +70,6 @@ const EventsSection = () => {
     }
 
 
-    console.log(events)
 
 
     useEffect(() => {
@@ -91,11 +92,6 @@ const EventsSection = () => {
         setSelectedType(e.target.value);
     };
 
-    // Reset all filters
-    const handleResetFilters = () => {
-        setSearchTerm('');
-        setSelectedType('all');
-    };
 
     if (isDataLoading) {
         return <Loading />
@@ -154,7 +150,7 @@ const EventsSection = () => {
                         <Loading loadingText="Searching" className="max-h-400px" />
                     ) : events && events.length > 0 ? (
                         events.map((event) => (
-                            <div key={event._id} className={`flex flex-col lg:flex-row p-5 lg:gap-9 gap-5 text-base-content border border-purple-300 ${isDark ? "bg-[#fbb4fd54] [&_p]:text-white" : "bg-purple-50 [&_p]:text-gray-600"} rounded-2xl`}>
+                            <div data-aos="flip-up" data-aos-delay="120" key={event._id} className={`flex flex-col lg:flex-row p-5 lg:gap-9 gap-5 text-base-content border border-purple-300 ${isDark ? "bg-[#fbb4fd54] [&_p]:text-white" : "bg-purple-50 [&_p]:text-gray-600"} rounded-2xl`}>
                                 <div className='flex-1'>
                                     <img src={event.image} className='rounded-2xl max-h-[190px] object-cover w-full' />
                                 </div>

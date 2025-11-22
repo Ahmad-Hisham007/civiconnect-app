@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import Loading from '../../Components/Loading/Loading';
 import { Link } from 'react-router';
 import displayPrice from '../../Utils/displayPrice';
+import formatDateForDisplay from '../../Utils/formatDate';
 
 const JoinedEventsTable = () => {
     const { isDark } = useContext(ThemeContext);
@@ -21,10 +22,7 @@ const JoinedEventsTable = () => {
             try {
                 const eventsPromise = fetch(`http://localhost:3000/joined-events?email=${user.email}`).then(async (res) => {
                     const data = await res.json();
-                    console.log(res)
-                    console.log(data)
                     if (!res.ok) {
-                        console.log(res)
                         toast.error(data.error);
                         throw new Error(data.error)
                     }
@@ -54,7 +52,7 @@ const JoinedEventsTable = () => {
         )
     };
     return (
-        <section>
+        <section data-aos="fade-down">
             <div className='max-w-[1300px] mx-auto py-20 px-4'>
                 <div className="overflow-x-auto">
 
@@ -95,7 +93,7 @@ const JoinedEventsTable = () => {
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <div className="font-bold">{event.date}</div>
+                                                    <div className="font-bold">{formatDateForDisplay(event.date)}</div>
                                                     <div className="text-sm opacity-50">{event.location}</div>
                                                 </div>
                                             </div>

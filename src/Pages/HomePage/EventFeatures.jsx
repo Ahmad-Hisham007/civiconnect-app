@@ -14,7 +14,7 @@ const EventFeatures = () => {
                 <div className="flex lg:flex-row lg:items-stretch flex-col gap-7">
 
                     {/* Left Column - Experienced Speaker */}
-                    <div className="space-y-8 lg:max-w-78 h-full">
+                    <div className="space-y-8 lg:max-w-78 h-full" data-aos="fade-down">
                         <div className="p-[33px_40px] bg-purple-200  rounded-2xl lg:rounded-[60px_0_0_0]">
                             <div className="flex items-center lg:flex-row flex-col lg:text-left text-center gap-5 mb-4">
                                 <ImUserTie className='text-primary text-6xl' />
@@ -25,7 +25,7 @@ const EventFeatures = () => {
                             </p>
                         </div>
 
-                        <div className="p-[33px_40px] bg-purple-200  rounded-2xl lg:rounded-[0_0_0_60px]">
+                        <div className="p-[33px_40px] bg-purple-200  rounded-2xl lg:rounded-[0_0_0_60px]" data-aos="fade-up">
                             <div className="flex items-center lg:flex-row flex-col lg:text-left text-center gap-5 mb-4">
                                 <MdOutlineQuestionAnswer className='text-primary text-6xl' />
                                 <h3 className="text-2xl font-bold text-stable-100">Live Q&A Sessions</h3>
@@ -42,6 +42,7 @@ const EventFeatures = () => {
                         style={{
                             backgroundImage: 'url(https://demo.rstheme.com/wordpress/vibent/wp-content/uploads/2025/10/e-h3-f-bg1.jpg)'
                         }}
+                        data-aos="fade"
                     >
                         <div>
                             <span className="inline-block font-cursive bg-base-100 px-4 py-2 rounded-full text-lg font-bold mb-4">
@@ -59,7 +60,7 @@ const EventFeatures = () => {
                     </div>
 
                     {/* Right Column */}
-                    <div className="space-y-8 lg:max-w-78 h-full">
+                    <div className="space-y-8 lg:max-w-78 h-full" data-aos="fade-down">
                         <div className="p-[33px_40px] bg-purple-200  rounded-2xl lg:rounded-[0_60px_0_0]">
                             <div className="flex items-center lg:flex-row flex-col lg:text-left text-center gap-5 mb-4">
                                 <GiShop className='text-primary text-6xl' />
@@ -70,7 +71,7 @@ const EventFeatures = () => {
                             </p>
                         </div>
 
-                        <div className="p-[33px_40px] bg-purple-200  rounded-2xl lg:rounded-[0_0_60px_0]">
+                        <div className="p-[33px_40px] bg-purple-200  rounded-2xl lg:rounded-[0_0_60px_0]" data-aos="fade-up">
                             <div className="flex items-center lg:flex-row flex-col lg:text-left text-center gap-5 mb-4">
                                 <RiUserCommunityFill className='text-primary text-6xl!' />
                                 <h3 className="text-2xl font-bold text-stable-100">Networking Opportunities</h3>

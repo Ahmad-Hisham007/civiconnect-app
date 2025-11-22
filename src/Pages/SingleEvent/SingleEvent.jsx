@@ -8,6 +8,8 @@ import { DataLoadingContext } from '../../Contexts/DataLoading';
 import Loading from '../../Components/Loading/Loading';
 import { AuthContext } from '../../Contexts/AuthProvider/AuthProvider';
 import toast from 'react-hot-toast';
+import formatDateForDisplay from '../../Utils/formatDate';
+import displayPrice from '../../Utils/displayPrice';
 
 const SingleEvent = () => {
     const { id } = useParams();
@@ -96,11 +98,11 @@ const SingleEvent = () => {
         <div>
             <HeroSection />
             <section className='py-20'>
-                <div className='max-w-300 mx-auto grid grid-cols-3 gap-8'>
+                <div className='max-w-300 mx-auto grid lg:grid-cols-3 grid-cols-1 gap-8 px-5'>
 
                     {/* Left Column */}
 
-                    <div className='col-span-2'>
+                    <div className='lg:col-span-2 col-span-1' data-aos="fade-right" data-aos-delay="150">
                         <img className='rounded-2xl' src={event.image} />
                         <div className='flex items-center gap-2 mt-6'>
                             <span className='w-10 h-10 bg-purple-300 text-stable-100 flex justify-center items-center rounded-full'><BiCategoryAlt /></span>
@@ -117,12 +119,12 @@ const SingleEvent = () => {
 
                     {/* Right column */}
 
-                    <div className='col-span-1 h-full'>
+                    <div className='col-span-1 h-full' data-aos="fade-left" data-aos-delay="350">
                         <div className='md:sticky  top-22'>
                             <div className={`${isDark ? "bg-[#ffffff31]" : "bg-purple-100"} p-8 rounded-lg space-y-5`}>
                                 <div className={`${isDark ? "border-neutral-400" : "border-purple-300"}  border border-dotted rounded-lg px-5 py-3`}>
                                     <h4 className='text-base-content font-bold'>Date</h4>
-                                    <p className={`text-xs ${isDark ? "text-neutral-300" : "text-gray-500"}`}>{event.date}</p>
+                                    <p className={`text-xs ${isDark ? "text-neutral-300" : "text-gray-500"}`}>{formatDateForDisplay(event.date)}</p>
                                 </div>
                                 <div className={`${isDark ? "border-neutral-400" : "border-purple-300"}  border border-dotted rounded-lg px-5 py-3`}>
                                     <h4 className='text-base-content font-bold'>Location</h4>
@@ -131,6 +133,10 @@ const SingleEvent = () => {
                                 <div className={`${isDark ? "border-neutral-400" : "border-purple-300"}  border border-dotted rounded-lg px-5 py-3`}>
                                     <h4 className='text-base-content font-bold'>Organizer</h4>
                                     <p className={`text-xs ${isDark ? "text-neutral-300" : "text-gray-500"} capitalize `}>{event.organizerDetails.displayName}</p>
+                                </div>
+                                <div className={`${isDark ? "border-neutral-400" : "border-purple-300"}  border border-dotted rounded-lg px-5 py-3`}>
+                                    <h4 className='text-base-content font-bold'>Price</h4>
+                                    <p className={`text-xs ${isDark ? "text-neutral-300" : "text-gray-500"} capitalize `}>{displayPrice(event.price)}</p>
                                 </div>
                             </div>
                             <div className={`${isDark ? "bg-[#ffffff31]" : "bg-purple-100"} p-8 mt-6 rounded-lg space-y-5`}>

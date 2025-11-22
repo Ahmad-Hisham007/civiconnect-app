@@ -13,7 +13,7 @@ const HeroSection = () => {
 
 
             {/* Floating decorative images */}
-            <div className=" hidden md:block absolute top-20 right-20 w-64 h-64 z-10">
+            <div className=" hidden md:block absolute top-20 right-20 w-64 h-64 z-10" data-aos="fade-left">
                 <img
                     src="https://demo-themewinter.com/eventplace/wp-content/uploads/2022/11/hero_area_image_1.png"
                     alt="Event decoration"
@@ -21,16 +21,17 @@ const HeroSection = () => {
                 />
             </div>
 
-            <div className=" hidden md:block absolute bottom-10 -right-5 max-w-84 z-12">
+            <div className=" hidden md:block absolute bottom-10 -right-5 max-w-84 z-12 " data-aos="fade-left">
                 <img
                     src="https://demo-themewinter.com/eventplace/wp-content/uploads/2022/11/hero_area_image_2.png"
                     alt="Event decoration"
                     className="w-full h-auto object-contain drop-shadow-2xl"
+                    data-aos="fade-left"
                 />
             </div>
 
             {/* Main content container */}
-            <div className="z-15 mx-auto px-6 flex items-center justify-center md:pe-30 md:pt-84 pt-48 md:pb-20 pb-20">
+            <div className="z-15 mx-auto px-6 flex items-center justify-center md:pe-30 md:pt-84 pt-48 md:pb-20 pb-20" data-aos="fade-up">
                 <div className="max-w-3xl">
                     {/* Main heading */}
                     <h3 className="text-xl md:text-5xl md:text-left text-center font-bold text-indigo-200  leading-tight font-cursive">

@@ -14,7 +14,8 @@ const NewsletterSection = () => {
             <div className="container mx-auto max-w-5xl relative z-10">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     {/* Content Side */}
-                    <div className="text-white">
+                    <div className="text-white" data-aos="fade-right" ata-aos-offset="500"
+                        data-aos-duration="500">
                         <span className="inline-block font-cursive bg-white/20 text-white px-4 py-2 rounded-full text-base font-semibold mb-4 backdrop-blur-sm">
                             STAY CONNECTED
                         </span>
@@ -45,7 +46,7 @@ const NewsletterSection = () => {
                     </div>
 
                     {/* Form Side */}
-                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-2xl">
+                    <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20 shadow-2xl" data-aos="flip-up">
                         <div className="mb-6">
                             <h3 className="text-2xl font-bold text-white mb-2">Join Our Community</h3>
                             <p className="text-white/80">Get weekly insights and event updates</p>

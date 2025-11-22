@@ -58,7 +58,7 @@ const EventsCarousel = () => {
     ];
 
     return (
-        <div className="w-full max-w-6xl mx-auto px-4 py-12">
+        <div className="w-full max-w-6xl mx-auto px-4 py-12" data-aos="fade-up">
             <div className="text-center mb-12">
                 <h2 className="text-4xl font-bold text-base-content mb-4">
                     Most Recent Events Highlight

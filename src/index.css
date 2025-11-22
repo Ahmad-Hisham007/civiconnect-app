@@ -16,6 +16,8 @@
 html,
 body {
   font-family: var(--font-family-body);
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 @plugin "daisyui" {

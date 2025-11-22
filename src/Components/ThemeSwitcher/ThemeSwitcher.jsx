@@ -5,7 +5,6 @@ import { MdSunny } from "react-icons/md";
 
 const ThemeSwitcher = () => {
     const { theme, toggleTheme, isDark } = useContext(ThemeContext);
-    console.log(isDark)
 
     return (
         <button

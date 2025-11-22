@@ -130,7 +130,7 @@ const Header = () => {
                                 <div className="inline-block grow-0 width-full gap-5 px-4 mt-auto mb-4">
                                     {!user ? <>
                                         <Link to="/register" className="btn  border-0 bg-primary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-secondary">Register Now <BsTicketPerforatedFill className='text-xl' /></Link>
-                                        <Link to="/register" className="btn mt-5 border-0 bg-secondary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-primary">Login <BiSolidLogInCircle className='text-xl' /></Link>
+                                        <Link to="/login" className="btn mt-5 border-0 bg-secondary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-primary">Login <BiSolidLogInCircle className='text-xl' /></Link>
                                     </> : <button onClick={handleLogout} className="btn border-0 w-full bg-secondary text-stable-200 text-base p-[13px_24px]! h-auto! rounded-[60px] flex gap-3 items-center hover:bg-primary">Logout <RiLogoutCircleLine className='text-xl' /></button>}
                                 </div>
                             </nav>

@@ -11,6 +11,7 @@ const CreateEventForm = () => {
     const [startDate, setStartDate] = useState(new Date());
     const { startLoading } = useContext(DataLoadingContext);
     const { user } = useContext(AuthContext);
+    const { isDark } = useContext(ThemeContext);
 
 
     const handleCreateEvent = (e) => {
@@ -23,13 +24,6 @@ const CreateEventForm = () => {
         const location = e.target.location.value;
         const date = e.target.date.value;
         const price = e.target.price.value;
-        console.log(title,
-            description,
-            image,
-            type,
-            location,
-            date,
-            price)
 
         const newEvent = {
             title,
@@ -52,7 +46,7 @@ const CreateEventForm = () => {
                 body: JSON.stringify(newEvent)
             })
                 .then(res => res.json())
-                .then(data => console.log(data))
+                .then(data => data)
                 .catch((err) => {
                     setError(err.message)
                     toast.error(err.message)
@@ -126,7 +120,7 @@ const CreateEventForm = () => {
                     <div>
                         <fieldset className="fieldset w-full">
                             <legend className="fieldset-legend text-sm font-normal">Event type</legend>
-                            <select defaultValue="Pick a browser" name='eventType' className={`select w-full bg-base-200 border px-4 py-3 h-auto border-base-300  focus:ring-2 focus:ring-amber focus:border-amber transition-all duration-300 outline-0`} >
+                            <select defaultValue="Pick a browser" name='eventType' className={`select w-full ${isDark ? "bg-[#966597]" : "bg-base-200"} border px-4 py-3 h-auto border-base-300  focus:ring-2 focus:ring-amber focus:border-amber transition-all duration-300 outline-0`} >
                                 <option disabled={true}>Pick an event type</option>
                                 <option>Conference</option>
                                 <option>Seminar</option>
@@ -166,7 +160,7 @@ const CreateEventForm = () => {
                             <label htmlFor="eventDate" className="block text-sm font-normal text-base-content mb-2">
                                 Event date *
                             </label>
-                            <DatePicker name='date' className='w-full!  px-4 py-3 border border-base-300 rounded-lg focus:ring-2 focus:ring-amber focus:border-amber transition-all duration-300' selected={startDate} onChange={(date) => setStartDate(date)} minDate={new Date()} placeholderText="YYYY-MM-dd" dateFormat="yyyy-MMM-dd" />
+                            <DatePicker name='date' className='w-full!  px-4 py-3 border border-base-300 rounded-lg focus:ring-2 focus:ring-amber focus:border-amber transition-all duration-300' selected={startDate} onChange={(date) => setStartDate(date)} minDate={new Date()} placeholderText="YYYY-MM-dd" dateFormat="YYYY-MM-dd" />
 
                         </div>
                         <div>
