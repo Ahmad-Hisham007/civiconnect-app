@@ -25,7 +25,7 @@ const ManageEventsTable = () => {
             if (hasFetched.current) return;
             hasFetched.current = true;
             try {
-                const eventsPromise = fetch(`http://localhost:3000/manage-events?email=${user.email}`).then(async (res) => {
+                const eventsPromise = fetch(`https://civiconnect-server.vercel.app/manage-events?email=${user.email}`).then(async (res) => {
                     const data = await res.json();
 
                     if (!res.ok) {
@@ -52,7 +52,7 @@ const ManageEventsTable = () => {
         updateEventModalRef.current.showModal();
         try {
 
-            const eventsPromise = fetch(`http://localhost:3000/events/${id}`).then(async (res) => {
+            const eventsPromise = fetch(`https://civiconnect-server.vercel.app/events/${id}`).then(async (res) => {
                 const data = await res.json();
 
                 if (!res.ok) {

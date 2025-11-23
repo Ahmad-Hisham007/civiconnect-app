@@ -29,7 +29,7 @@ const SingleEvent = () => {
         const fetchEvent = async () => {
 
             try {
-                const promise = fetch(`http://localhost:3000/events/${id}`)
+                const promise = fetch(`https://civiconnect-server.vercel.app/events/${id}`)
                     .then(res => res.json());
 
                 startLoading(promise, 'Loading event...', 'Event loaded!', 'Failed to load event');
@@ -65,7 +65,7 @@ const SingleEvent = () => {
             currentUser: user.email
         }
         try {
-            const joinedEventPromise = fetch(`http://localhost:3000/joined-events`, {
+            const joinedEventPromise = fetch(`https://civiconnect-server.vercel.app/joined-events`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

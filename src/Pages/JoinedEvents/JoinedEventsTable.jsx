@@ -20,13 +20,14 @@ const JoinedEventsTable = () => {
         hasFetched.current = true;
         const fetchEvents = async () => {
             try {
-                const eventsPromise = fetch(`http://localhost:3000/joined-events?email=${user.email}`).then(async (res) => {
+                const eventsPromise = fetch(`https://civiconnect-server.vercel.app/joined-events?email=${user.email}`).then(async (res) => {
                     const data = await res.json();
                     if (!res.ok) {
                         toast.error(data.error);
                         throw new Error(data.error)
                     }
-                    setEvents(data);
+                    const sortedEvents = [...data].sort((a, b) => new Date(b.date) - new Date(a.date));
+                    setEvents(sortedEvents);
                 })
                 startLoading(eventsPromise, "Loading events", "events loaded succesfully", "No events found")
 

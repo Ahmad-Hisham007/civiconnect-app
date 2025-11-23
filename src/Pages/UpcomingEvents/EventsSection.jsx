@@ -34,7 +34,7 @@ const EventsSection = () => {
             const today = getTodayInFormat();
 
 
-            let url = `http://localhost:3000/events?filterDate=${encodeURIComponent(today)}`;
+            let url = `https://civiconnect-server.vercel.app/events?filterDate=${encodeURIComponent(today)}`;
 
             if (search) {
                 url += `&search=${search}`;

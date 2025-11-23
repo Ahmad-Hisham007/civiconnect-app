@@ -38,7 +38,7 @@ const CreateEventForm = () => {
         function fetchData() {
 
 
-            const newEventPormise = fetch("http://localhost:3000/events", {
+            const newEventPormise = fetch("https://civiconnect-server.vercel.app/events", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

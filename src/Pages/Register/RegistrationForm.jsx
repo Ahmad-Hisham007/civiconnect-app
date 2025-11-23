@@ -87,7 +87,7 @@ const RegistrationForm = () => {
                 registeredAt: new Date().toISOString()
             }
             if (user.uid) {
-                const response = await fetch('http://localhost:3000/users', {
+                const response = await fetch('https://civiconnect-server.vercel.app/users', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ const RegistrationForm = () => {
                 registeredAt: new Date().toISOString()
             }
 
-            const response = await fetch('http://localhost:3000/users', {
+            const response = await fetch('https://civiconnect-server.vercel.app/users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

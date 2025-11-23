@@ -150,12 +150,15 @@ const Header = () => {
                 {user && <div className='dropdown cursor-pointer md:hidden block'>
                     <div tabIndex={0} role="button" className="tooltip tooltip-bottom" data-tip={user.displayName || 'User Display Name'}>
 
-                        <div className=" font-semibold font-primary text-lg text-main hover:text-white hover:bg-main border-2 border-stable-100 cursor-pointer rounded-full w-12 h-12">
+                        <div className="relative flex font-semibold font-primary text-lg text-main hover:text-white hover:bg-main border-2 border-stable-100 cursor-pointer rounded-full w-12 h-12">
+                            <span class="absolute inline-flex h-full w-full animate-ping duration-1000 rounded-full bg-purple-300 opacity-75"></span>
+                            <span class="relative inline-flex size-3 rounded-full bg-purple-500"></span>
                             {
                                 user.photoURL ? <img className='w-full h-full object-cover object-top rounded-full' src={user.photoURL} alt={`${user.displayName} name`} referrerPolicy="no-referrer" /> :
                                     <FaRegUser />
                             }
                         </div>
+
                     </div>
                     <ul tabIndex="-1" className="gap-2 dropdown-content menu bg-base-100 [&_a]:text-base-200-content [&_a]:hover:bg-base-300 [&_a]:hover:text-base-200-content! [&_a]:active:bg-base-300 [&_a]:active:text-base-200-content! [&_a.active]:bg-base-300 [&_a.active]:text-base-200-content! rounded-box z-1 w-auto min-w-40 font-normal right-0 top-full mt-2 p-2 shadow-sm">
                         {
@@ -179,7 +182,9 @@ const Header = () => {
                         user && <div className='dropdown cursor-pointer'>
                             <div tabIndex={0} role="button" className="tooltip tooltip-bottom" data-tip={user.displayName || 'User Display Name'}>
 
-                                <div className=" font-semibold font-primary text-lg text-main hover:text-white hover:bg-main border-2 border-stable-100 cursor-pointer rounded-full w-12 h-12">
+                                <div className="relative flex font-semibold font-primary text-lg text-main hover:text-white hover:bg-main border-2 border-stable-100 cursor-pointer rounded-full w-12 h-12">
+                                    <span class="absolute inline-flex h-full w-full animate-ping duration-1000 rounded-full bg-purple-300 opacity-75"></span>
+                                    <span class="relative inline-flex size-3 rounded-full bg-purple-500"></span>
                                     {
                                         user.photoURL ? <img className='w-full h-full object-cover object-top rounded-full' src={user.photoURL} alt={`${user.displayName} name`} referrerPolicy="no-referrer" /> :
                                             <FaRegUser />

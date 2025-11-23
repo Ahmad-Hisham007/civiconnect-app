@@ -32,7 +32,7 @@ const UpdateEventForm = ({ updateEventData, onEventUpdate, closeModal }) => {
         };
 
         try {
-            const promise = fetch(`http://localhost:3000/events/${updateEventData._id}`, {
+            const promise = fetch(`https://civiconnect-server.vercel.app/events/${updateEventData._id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
